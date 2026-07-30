@@ -17,7 +17,6 @@
             --purple-pill: #e9d5ff;
             --border-color: #d8b4fe;
             --audio-bar-bg: #1e0a38;
-            --success-green: #10b981;
         }
 
         * {
@@ -30,7 +29,7 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 120px; /* Room for fixed bottom audio bar */
+            padding-bottom: 120px;
             min-height: 100vh;
         }
 
@@ -107,7 +106,6 @@
             pointer-events: none;
         }
 
-        /* Auth / Profile Button */
         .btn-profile {
             background-color: var(--primary-purple);
             color: #ffffff;
@@ -163,7 +161,6 @@
             box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
         }
 
-        /* Main Container Layout */
         main {
             max-width: 1100px;
             margin: 0 auto;
@@ -184,7 +181,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Common Cards */
         .purple-card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -203,7 +199,7 @@
             gap: 10px;
         }
 
-        /* TAB 0: HOME WEBPAGE PAGE */
+        /* HOME TAB */
         .hero-banner {
             background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);
             color: white;
@@ -216,20 +212,12 @@
             align-items: center;
         }
 
-        .hero-banner h2 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        .hero-banner p {
-            font-size: 1.05rem;
-            color: #e9d5ff;
-            max-width: 600px;
-        }
+        .hero-banner h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero-banner p { font-size: 1.05rem; color: #e9d5ff; max-width: 600px; }
 
         .home-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
@@ -247,7 +235,7 @@
             margin-top: 5px;
         }
 
-        /* TAB 1: POMODORO TIMER & CUSTOM TIME CONTROLS */
+        /* POMODORO TIMER */
         .pomodoro-card {
             background: var(--bg-card);
             border-radius: 24px;
@@ -298,12 +286,7 @@
             flex-wrap: wrap;
         }
 
-        .custom-time-config label {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-
+        .custom-time-config label { font-size: 0.88rem; font-weight: 700; color: var(--text-muted); }
         .custom-time-config input {
             width: 70px;
             padding: 6px 10px;
@@ -342,10 +325,7 @@
             box-shadow: 0 6px 15px rgba(126, 34, 206, 0.3);
         }
 
-        .btn-timer:hover {
-            background-color: var(--primary-purple-hover);
-            transform: translateY(-2px);
-        }
+        .btn-timer:hover { background-color: var(--primary-purple-hover); transform: translateY(-2px); }
 
         .btn-timer-secondary {
             background-color: var(--purple-pill);
@@ -356,26 +336,13 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
-        /* TAB 2: PLANNER */
-        .planner-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
+        /* PLANNER & TASKS */
+        .planner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 768px) { .planner-grid { grid-template-columns: 1fr; } }
 
-        @media (max-width: 768px) {
-            .planner-grid { grid-template-columns: 1fr; }
-        }
-
-        .task-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
+        .task-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
         .task-input {
             flex: 1;
             padding: 12px 16px;
@@ -397,13 +364,7 @@
             cursor: pointer;
         }
 
-        .task-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
         .task-item {
             display: flex;
             align-items: center;
@@ -414,17 +375,8 @@
             border: 1px solid var(--border-color);
         }
 
-        .task-item.completed span {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .task-checkbox {
-            accent-color: var(--primary-purple);
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
+        .task-item.completed span { text-decoration: line-through; color: var(--text-muted); }
+        .task-checkbox { accent-color: var(--primary-purple); width: 18px; height: 18px; cursor: pointer; }
 
         .notes-textarea {
             width: 100%;
@@ -439,41 +391,17 @@
             resize: vertical;
         }
 
-        /* TAB 4: VOCABULARY TRACKER */
-        .vocab-controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+        /* VOCABULARY TRACKER */
+        .vocab-controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .vocab-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .vocab-table th, .vocab-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
+        .vocab-table th { color: var(--primary-purple); background: var(--purple-light); }
 
-        .vocab-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .vocab-table th, .vocab-table td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .vocab-table th {
-            color: var(--primary-purple);
-            background: var(--purple-light);
-        }
-
-        .badge-status {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-
+        .badge-status { padding: 4px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; }
         .badge-learning { background: #fef08a; color: #854d0e; }
         .badge-mastered { background: #dcfce7; color: #166534; }
 
-        /* MODALS (Auth & Profile Settings) */
+        /* MODALS */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -542,7 +470,6 @@
             text-decoration: underline;
         }
 
-        /* Profile Modal Tabs */
         .profile-nav-tabs {
             display: flex;
             gap: 10px;
@@ -560,12 +487,9 @@
             border-bottom: 2px solid transparent;
         }
 
-        .profile-nav-btn.active {
-            color: var(--primary-purple);
-            border-bottom-color: var(--primary-purple);
-        }
+        .profile-nav-btn.active { color: var(--primary-purple); border-bottom-color: var(--primary-purple); }
 
-        /* BOTTOM BACKGROUND AUDIO BAR (NO EMBEDDED VIDEO) */
+        /* AUDIO PLAYER BAR */
         .audio-bar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -581,13 +505,7 @@
             color: #ffffff;
         }
 
-        .audio-info-section {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 200px;
-        }
-
+        .audio-info-section { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
         .audio-info-section h4 { font-size: 1rem; font-weight: 700; color: #ffffff; }
         .audio-info-section p { font-size: 0.82rem; color: #e9d5ff; }
 
@@ -601,13 +519,7 @@
             margin: 0 20px;
         }
 
-        .url-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
+        .url-input-wrapper { display: flex; align-items: center; gap: 10px; width: 100%; }
         .url-input {
             flex: 1;
             background: #110426;
@@ -642,21 +554,8 @@
             max-width: 220px;
         }
 
-        .player-buttons {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .btn-ctrl {
-            background: transparent;
-            border: none;
-            color: #e9d5ff;
-            cursor: pointer;
-            font-size: 1.15rem;
-            transition: color 0.2s, transform 0.1s;
-        }
-
+        .player-buttons { display: flex; align-items: center; gap: 16px; }
+        .btn-ctrl { background: transparent; border: none; color: #e9d5ff; cursor: pointer; font-size: 1.15rem; }
         .btn-ctrl:hover { color: #ffffff; transform: scale(1.15); }
 
         .btn-main-play {
@@ -674,20 +573,8 @@
             box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
 
-        .seek-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .time-text {
-            font-size: 0.75rem;
-            color: #e9d5ff;
-            font-variant-numeric: tabular-nums;
-            width: 38px;
-            text-align: center;
-        }
+        .seek-container { display: flex; align-items: center; gap: 12px; width: 100%; }
+        .time-text { font-size: 0.75rem; color: #e9d5ff; font-variant-numeric: tabular-nums; width: 38px; text-align: center; }
 
         .seek-slider {
             flex: 1;
@@ -703,8 +590,7 @@
         .seek-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 13px;
-            height: 13px;
+            width: 13px; height: 13px;
             border-radius: 50%;
             background: #a855f7;
             cursor: pointer;
@@ -760,7 +646,7 @@
         <section id="home" class="tab-content active">
             <div class="hero-banner">
                 <div>
-                    <h2>Welcome to 퍼플룸 (Purple Room)</h2>
+                    <h2 id="welcomeHeading">Welcome to 퍼플룸 (Purple Room)</h2>
                     <p>Your peaceful aesthetic space for deep focus, structured planning, ambient listening, and continuous learning.</p>
                 </div>
                 <i class="fa-solid fa-sparkles" style="font-size: 3.5rem; opacity: 0.8;"></i>
@@ -770,17 +656,17 @@
                 <div class="stat-box">
                     <i class="fa-solid fa-fire" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
                     <p style="margin-top: 8px; font-weight: 600;">Current Streak</p>
-                    <h4>5 Days</h4>
+                    <h4 id="statStreak">0 Days</h4>
                 </div>
                 <div class="stat-box">
                     <i class="fa-solid fa-clock" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
                     <p style="margin-top: 8px; font-weight: 600;">Focus Hours Today</p>
-                    <h4>2.5 hrs</h4>
+                    <h4 id="statFocusTime">0.0 hrs</h4>
                 </div>
                 <div class="stat-box">
                     <i class="fa-solid fa-spell-check" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
                     <p style="margin-top: 8px; font-weight: 600;">Words Learned</p>
-                    <h4>42 Words</h4>
+                    <h4 id="statWordsLearned">0 Words</h4>
                 </div>
             </div>
         </section>
@@ -816,21 +702,13 @@
                         <input type="text" class="task-input" id="taskInput" placeholder="Add a new task...">
                         <button class="btn-add-task" onclick="addTask()">Add</button>
                     </div>
-                    <ul class="task-list" id="taskList">
-                        <li class="task-item">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" class="task-checkbox" onchange="toggleTask(this)">
-                                <span>Complete 4 Purple Room sessions</span>
-                            </div>
-                            <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(this)"></i>
-                        </li>
-                    </ul>
+                    <ul class="task-list" id="taskList"></ul>
                 </div>
 
                 <div class="purple-card">
                     <h3><i class="fa-solid fa-chart-line"></i> Daily Reflection</h3>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Track your study flow and achievements in 퍼플룸.</p>
-                    <textarea class="notes-textarea" placeholder="Write your daily reflection..."></textarea>
+                    <textarea class="notes-textarea" id="dailyReflectionInput" placeholder="Write your daily reflection..." oninput="saveUserData()"></textarea>
                 </div>
             </div>
         </section>
@@ -853,20 +731,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="vocabTableBody">
-                        <tr>
-                            <td><strong>보라해 (Borahae)</strong></td>
-                            <td>I Purple You (Trust and love for a long time)</td>
-                            <td><span class="badge-status badge-mastered">Mastered</span></td>
-                            <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>집중 (Jip-jung)</strong></td>
-                            <td>Concentration / Focus</td>
-                            <td><span class="badge-status badge-learning">Learning</span></td>
-                            <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="vocabTableBody"></tbody>
                 </table>
             </div>
         </section>
@@ -874,7 +739,7 @@
         <section id="notes" class="tab-content">
             <div class="purple-card">
                 <h3><i class="fa-solid fa-note-sticky"></i> Session Notes</h3>
-                <textarea class="notes-textarea" style="height: 320px;" placeholder="Jot down quick thoughts, links, or research notes..."></textarea>
+                <textarea class="notes-textarea" id="sessionNotesInput" style="height: 320px;" placeholder="Jot down quick thoughts..." oninput="saveUserData()"></textarea>
             </div>
         </section>
     </main>
@@ -950,13 +815,10 @@
 
             <div id="privacySettings" class="profile-tab-content" style="display: none;">
                 <div class="form-group">
-                    <label><input type="checkbox" checked> Hide daily stats from public</label>
+                    <label><input type="checkbox" checked> Hide stats publicly</label>
                 </div>
                 <div class="form-group">
-                    <label><input type="checkbox" checked> Allow focus streak visibility</label>
-                </div>
-                <div class="form-group">
-                    <label><input type="checkbox"> Share audio activity</label>
+                    <label><input type="checkbox" checked> Allow focus streak tracking</label>
                 </div>
                 <button class="btn-submit" onclick="alert('Privacy settings saved!')">Update Privacy</button>
             </div>
@@ -976,7 +838,7 @@
         <div class="audio-center-controls">
             <div class="url-input-wrapper">
                 <input type="text" class="url-input" id="audioUrlInput" 
-                       placeholder="Enter MP3 / Audio Stream Direct URL..." 
+                       placeholder="Enter MP3 / Stream URL..." 
                        value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
                 
                 <button class="btn-play-url" onclick="playCustomStream()">Load Stream</button>
@@ -1010,9 +872,7 @@
             <div class="player-buttons">
                 <button class="btn-ctrl" onclick="prevAudioTrack()"><i class="fa-solid fa-backward-step"></i></button>
                 <button class="btn-ctrl" onclick="seekRelative(-15)"><i class="fa-solid fa-rotate-left"></i></button>
-                
                 <button class="btn-main-play" onclick="toggleAudioPlay()" id="mainPlayBtn"><i class="fa-solid fa-play"></i></button>
-                
                 <button class="btn-ctrl" onclick="seekRelative(15)"><i class="fa-solid fa-rotate-right"></i></button>
                 <button class="btn-ctrl" onclick="nextAudioTrack()"><i class="fa-solid fa-forward-step"></i></button>
             </div>
@@ -1028,7 +888,7 @@
     <audio id="nativeAudioEngine"></audio>
 
     <script>
-        /* SITE TRANSLATION DICTIONARY */
+        /* SITE TRANSLATIONS */
         const translations = {
             en: { home: "Home", tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", vocab: "Vocabulary", profile: "Sign Up / Log In" },
             ko: { home: "홈", tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", vocab: "단어장", profile: "회원가입 / 로그인" },
@@ -1047,7 +907,7 @@
             if (!currentUser) document.getElementById('profileBtnText').innerText = t.profile;
         }
 
-        /* TAB NAVIGATION */
+        /* NAVIGATION */
         function switchTab(tabId, event) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -1055,24 +915,92 @@
             if (event) event.currentTarget.classList.add('active');
         }
 
-        /* AUTHENTICATION & USER PROFILE STATE */
+        /* LOCALSTORAGE & DATA SYSTEM */
         let currentUser = null;
+        let userData = {
+            streakDays: 0,
+            focusMinutesToday: 0,
+            tasks: [],
+            vocabList: [],
+            dailyReflection: "",
+            sessionNotes: ""
+        };
 
-        function handleProfileClick() {
-            if (!currentUser) {
-                openAuthModal();
+        function loadAccountData(username) {
+            const stored = localStorage.getItem(`purple_room_user_${username}`);
+            if (stored) {
+                userData = JSON.parse(stored);
             } else {
-                openProfileModal();
+                /* Defaults start from ZERO for brand new accounts */
+                userData = {
+                    streakDays: 1,
+                    focusMinutesToday: 0,
+                    tasks: [],
+                    vocabList: [],
+                    dailyReflection: "",
+                    sessionNotes: ""
+                };
+                saveUserData();
             }
+            renderUserData();
         }
 
-        function openAuthModal() {
-            document.getElementById('authModal').classList.add('active');
+        function saveUserData() {
+            if (!currentUser) return;
+            userData.dailyReflection = document.getElementById('dailyReflectionInput').value;
+            userData.sessionNotes = document.getElementById('sessionNotesInput').value;
+            localStorage.setItem(`purple_room_user_${currentUser.username}`, JSON.stringify(userData));
         }
 
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.remove('active');
+        function renderUserData() {
+            // Render Stats starting from 0
+            document.getElementById('statStreak').innerText = `${userData.streakDays} Days`;
+            document.getElementById('statFocusTime').innerText = `${(userData.focusMinutesToday / 60).toFixed(1)} hrs`;
+            document.getElementById('statWordsLearned').innerText = `${userData.vocabList.length} Words`;
+
+            // Render Notes
+            document.getElementById('dailyReflectionInput').value = userData.dailyReflection || '';
+            document.getElementById('sessionNotesInput').value = userData.sessionNotes || '';
+
+            // Render Tasks
+            const taskUl = document.getElementById('taskList');
+            taskUl.innerHTML = '';
+            userData.tasks.forEach((t, index) => {
+                const li = document.createElement('li');
+                li.className = `task-item ${t.completed ? 'completed' : ''}`;
+                li.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" class="task-checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+                        <span>${t.text}</span>
+                    </div>
+                    <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(${index})"></i>
+                `;
+                taskUl.appendChild(li);
+            });
+
+            // Render Vocab
+            const vocabTbody = document.getElementById('vocabTableBody');
+            vocabTbody.innerHTML = '';
+            userData.vocabList.forEach((v, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${v.word}</strong></td>
+                    <td>${v.def}</td>
+                    <td><span class="badge-status ${v.mastered ? 'badge-mastered' : 'badge-learning'}">${v.mastered ? 'Mastered' : 'Learning'}</span></td>
+                    <td><button class="mode-btn" onclick="toggleVocabStatus(${index})">Toggle Status</button></td>
+                `;
+                vocabTbody.appendChild(tr);
+            });
         }
+
+        /* AUTH MODAL HANDLERS */
+        function handleProfileClick() {
+            if (!currentUser) openAuthModal();
+            else openProfileModal();
+        }
+
+        function openAuthModal() { document.getElementById('authModal').classList.add('active'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
         function toggleAuthView(view) {
             if (view === 'login') {
@@ -1088,35 +1016,33 @@
 
         function handleSignUp(e) {
             e.preventDefault();
-            const name = document.getElementById('signUpName').value;
-            const username = document.getElementById('signUpUsername').value;
+            const name = document.getElementById('signUpName').value.trim();
+            const username = document.getElementById('signUpUsername').value.trim();
             currentUser = { name, username };
-            updateUserUI();
+            updateUserHeader();
+            loadAccountData(username);
             closeAuthModal();
-            alert(`Welcome to 퍼플룸, ${name}!`);
+            alert(`Account created! Welcome to 퍼플룸, ${name}!`);
         }
 
         function handleLogIn(e) {
             e.preventDefault();
-            const username = document.getElementById('loginUsername').value;
+            const username = document.getElementById('loginUsername').value.trim();
             currentUser = { name: username.replace('@',''), username };
-            updateUserUI();
+            updateUserHeader();
+            loadAccountData(username);
             closeAuthModal();
         }
 
-        function updateUserUI() {
+        function updateUserHeader() {
             document.getElementById('profileBtnText').innerText = currentUser.name;
+            document.getElementById('welcomeHeading').innerText = `Welcome back, ${currentUser.name}!`;
             document.getElementById('editDisplayName').value = currentUser.name;
             document.getElementById('editUsername').value = currentUser.username;
         }
 
-        function openProfileModal() {
-            document.getElementById('profileModal').classList.add('active');
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profileModal').classList.remove('active');
-        }
+        function openProfileModal() { document.getElementById('profileModal').classList.add('active'); }
+        function closeProfileModal() { document.getElementById('profileModal').classList.remove('active'); }
 
         function switchProfileTab(tabId, event) {
             document.querySelectorAll('.profile-tab-content').forEach(el => el.style.display = 'none');
@@ -1129,21 +1055,25 @@
             e.preventDefault();
             currentUser.name = document.getElementById('editDisplayName').value;
             currentUser.username = document.getElementById('editUsername').value;
-            updateUserUI();
-            alert('Profile updated successfully!');
+            updateUserHeader();
+            alert('Profile saved!');
             closeProfileModal();
         }
 
         function handleLogOut() {
             currentUser = null;
             document.getElementById('profileBtnText').innerText = 'Sign Up / Log In';
+            document.getElementById('welcomeHeading').innerText = 'Welcome to 퍼플룸 (Purple Room)';
+            // Reset local views to zero
+            userData = { streakDays: 0, focusMinutesToday: 0, tasks: [], vocabList: [], dailyReflection: "", sessionNotes: "" };
+            renderUserData();
             closeProfileModal();
-            alert('Logged out.');
         }
 
-        /* POMODORO TIMER LOGIC (CUSTOMIZABLE) */
+        /* TIMER LOGIC & AUTOMATIC TIME SAVING */
         let timerSeconds = 25 * 60;
         let totalSeconds = 25 * 60;
+        let sessionLengthMinutes = 25;
         let timerInterval = null;
         let isTimerRunning = false;
 
@@ -1170,6 +1100,7 @@
             clearInterval(timerInterval);
             isTimerRunning = false;
             document.getElementById('startBtn').innerText = 'START';
+            sessionLengthMinutes = mins;
             timerSeconds = mins * 60;
             totalSeconds = mins * 60;
             updateTimerDisplay();
@@ -1192,6 +1123,12 @@
                         clearInterval(timerInterval);
                         isTimerRunning = false;
                         startBtn.innerText = 'START';
+                        
+                        // Increment Focus Time automatically
+                        userData.focusMinutesToday += sessionLengthMinutes;
+                        saveUserData();
+                        renderUserData();
+
                         alert('Focus session complete!');
                     }
                 }, 1000);
@@ -1206,68 +1143,50 @@
             updateTimerDisplay();
         }
 
-        /* TASK LIST LOGIC */
+        /* DYNAMIC TASK LIST */
         function addTask() {
             const input = document.getElementById('taskInput');
             const text = input.value.trim();
             if (!text) return;
 
-            const ul = document.getElementById('taskList');
-            const li = document.createElement('li');
-            li.className = 'task-item';
-            li.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" class="task-checkbox" onchange="toggleTask(this)">
-                    <span>${text}</span>
-                </div>
-                <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(this)"></i>
-            `;
-            ul.appendChild(li);
+            userData.tasks.push({ text, completed: false });
+            saveUserData();
+            renderUserData();
             input.value = '';
         }
 
-        function toggleTask(checkbox) {
-            const item = checkbox.closest('.task-item');
-            if (checkbox.checked) item.classList.add('completed');
-            else item.classList.remove('completed');
+        function toggleTask(idx) {
+            userData.tasks[idx].completed = !userData.tasks[idx].completed;
+            saveUserData();
+            renderUserData();
         }
 
-        function deleteTask(icon) {
-            icon.closest('.task-item').remove();
+        function deleteTask(idx) {
+            userData.tasks.splice(idx, 1);
+            saveUserData();
+            renderUserData();
         }
 
-        /* VOCABULARY TRACKER LOGIC */
+        /* DYNAMIC VOCABULARY TRACKER */
         function addVocabWord() {
             const word = document.getElementById('vocabWord').value.trim();
             const def = document.getElementById('vocabDef').value.trim();
             if (!word || !def) return;
 
-            const tbody = document.getElementById('vocabTableBody');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${word}</strong></td>
-                <td>${def}</td>
-                <td><span class="badge-status badge-learning">Learning</span></td>
-                <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
-            `;
-            tbody.appendChild(tr);
+            userData.vocabList.push({ word, def, mastered: false });
+            saveUserData();
+            renderUserData();
             document.getElementById('vocabWord').value = '';
             document.getElementById('vocabDef').value = '';
         }
 
-        function toggleVocabStatus(btn) {
-            const tr = btn.closest('tr');
-            const badge = tr.querySelector('.badge-status');
-            if (badge.classList.contains('badge-learning')) {
-                badge.className = 'badge-status badge-mastered';
-                badge.innerText = 'Mastered';
-            } else {
-                badge.className = 'badge-status badge-learning';
-                badge.innerText = 'Learning';
-            }
+        function toggleVocabStatus(idx) {
+            userData.vocabList[idx].mastered = !userData.vocabList[idx].mastered;
+            saveUserData();
+            renderUserData();
         }
 
-        /* AUDIO PLAYER ENGINE (NO EMBED VIDEO) */
+        /* AUDIO PLAYER ENGINE */
         const audioTrackList = [
             "DNA", "Fake Love", "Blood Sweat & Tears", "Butter", "Dynamite", 
             "Boy With Luv", "I Need U", "IDOL", "ON", "Spring Day", 
@@ -1322,7 +1241,7 @@
             const trackName = audioTrackList[currentTrackIdx];
             document.getElementById('audioTrackTitle').innerText = trackName;
             document.getElementById('audioTrackArtist').innerText = "BTS Audio Track";
-            audioElement.src = audioSampleStream; // Audio stream playback
+            audioElement.src = audioSampleStream;
             audioElement.play();
             document.getElementById('mainPlayBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
@@ -1348,6 +1267,9 @@
                 audioElement.currentTime = (val / 100) * audioElement.duration;
             }
         }
+
+        // Initialize empty state
+        renderUserData();
     </script>
 </body>
 </html>
