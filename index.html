@@ -1,193 +1,1523 @@
-/* COMPLETE MULTI-LANGUAGE DICTIONARY */
-const translations = {
-    en: {
-        // App Title
-        appTitle: "퍼플룸",
-        
-        // Navigation Tabs
-        home: "Home", tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", vocab: "Vocabulary", profile: "Sign Up / Log In",
-        
-        // Home Tab
-        welcomeHeading: "Welcome to 퍼플룸 (Purple Room)",
-        welcomeDesc: "Your peaceful aesthetic space for deep focus, structured planning, ambient listening, and continuous learning.",
-        statStreakLabel: "Current Streak",
-        statFocusLabel: "Focus Hours Today",
-        statVocabLabel: "Words Learned",
-        
-        // Pomodoro Tab
-        presetFocus: "Focus Preset (25m)",
-        presetShort: "Short Break (5m)",
-        presetLong: "Long Break (15m)",
-        customLabel: "Custom Minutes:",
-        setCustomBtn: "Set Custom",
-        
-        // Planner & Notes Tab
-        todayPriorities: "Today's Priorities",
-        taskPlaceholder: "Add a new task...",
-        addTaskBtn: "Add",
-        dailyReflection: "Daily Reflection",
-        reflectionDesc: "Track your study flow and achievements in 퍼플룸.",
-        reflectionPlaceholder: "Write your daily reflection...",
-        sessionNotes: "Session Notes",
-        notesPlaceholder: "Jot down quick thoughts...",
-        
-        // Vocabulary Tab
-        vocabTitle: "Vocabulary Tracker",
-        wordPlaceholder: "New word / phrase...",
-        defPlaceholder: "Definition / translation...",
-        addWordBtn: "Add Word",
-        thWord: "Word", thDef: "Definition", thStatus: "Status", thAction: "Action",
-        
-        // User Dropdown & Modals
-        editProfile: "Edit Profile",
-        settingsTimezone: "Settings & Timezone",
-        signOut: "Sign Out"
-    },
-    ko: {
-        appTitle: "퍼플룸",
-        home: "홈", tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", vocab: "단어장", profile: "회원가입 / 로그인",
-        welcomeHeading: "퍼플룸(Purple Room)에 오신 것을 환영합니다",
-        welcomeDesc: "몰입형 집중, 계획 작성, 힐링 음악 감상 및 지속적인 학습을 위한 평화로운 공간입니다.",
-        statStreakLabel: "현재 연속 달성",
-        statFocusLabel: "오늘 집중 시간",
-        statVocabLabel: "학습한 단어 수",
-        presetFocus: "집중 모드 (25분)",
-        presetShort: "짧은 휴식 (5분)",
-        presetLong: "긴 휴식 (15분)",
-        customLabel: "사용자 설정 (분):",
-        setCustomBtn: "설정 완료",
-        todayPriorities: "오늘의 우선순위",
-        taskPlaceholder: "새 할 일을 입력하세요...",
-        addTaskBtn: "추가",
-        dailyReflection: "일일 회고",
-        reflectionDesc: "퍼플룸에서의 학습 흐름과 성과를 기록하세요.",
-        reflectionPlaceholder: "오늘의 회고를 작성해보세요...",
-        sessionNotes: "세션 노트",
-        notesPlaceholder: "빠른 아이디어나 메모를 남기세요...",
-        vocabTitle: "단어장 트래커",
-        wordPlaceholder: "새 단어 / 표현...",
-        defPlaceholder: "뜻 / 번역...",
-        addWordBtn: "단어 추가",
-        thWord: "단어", thDef: "뜻", thStatus: "상태", thAction: "작동",
-        editProfile: "프로필 수정",
-        settingsTimezone: "설정 및 시간대",
-        signOut: "로그아웃"
-    },
-    es: {
-        appTitle: "Purple Room",
-        home: "Inicio", tab1: "Temporizador", tab2: "Planificador", tab3: "Notas Diarias", vocab: "Vocabulario", profile: "Registro / Iniciar",
-        welcomeHeading: "Bienvenido a 퍼플룸 (Purple Room)",
-        welcomeDesc: "Tu espacio estético y tranquilo para la concentración profunda, planificación y aprendizaje continuo.",
-        statStreakLabel: "Racha Actual",
-        statFocusLabel: "Horas de Enfoque Hoy",
-        statVocabLabel: "Palabras Aprendidas",
-        presetFocus: "Modo Enfoque (25m)",
-        presetShort: "Descanso Corto (5m)",
-        presetLong: "Descanso Largo (15m)",
-        customLabel: "Minutos Personalizados:",
-        setCustomBtn: "Establecer",
-        todayPriorities: "Prioridades de Hoy",
-        taskPlaceholder: "Añadir nueva tarea...",
-        addTaskBtn: "Añadir",
-        dailyReflection: "Reflexión Diaria",
-        reflectionDesc: "Registra tu progreso y logros diarios en 퍼플룸.",
-        reflectionPlaceholder: "Escribe tu reflexión diaria...",
-        sessionNotes: "Notas de la Sesión",
-        notesPlaceholder: "Escribe notas rápidas...",
-        vocabTitle: "Registro de Vocabulario",
-        wordPlaceholder: "Nueva palabra...",
-        defPlaceholder: "Definición...",
-        addWordBtn: "Añadir Palabra",
-        thWord: "Palabra", thDef: "Definición", thStatus: "Estado", thAction: "Acción",
-        editProfile: "Editar Perfil",
-        settingsTimezone: "Ajustes y Zona Horaria",
-        signOut: "Cerrar Sesión"
-    }
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼플룸 (Purple Room) - Focus & Study Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f3e8ff; 
+            --bg-card: #ffffff;
+            --text-main: #2e1065;
+            --text-muted: #6b21a8;
+            --primary-purple: #7e22ce;
+            --primary-purple-hover: #6b21a8;
+            --purple-light: #faf5ff;
+            --purple-pill: #e9d5ff;
+            --border-color: #d8b4fe;
+            --audio-bar-bg: #1e0a38;
+        }
 
-let currentLang = 'en';
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
 
-function changeLanguage(langKey) {
-    currentLang = langKey;
-    const t = translations[langKey] || translations.en;
-    
-    // Header & Tabs
-    document.getElementById('tabHomeText').innerText = t.home;
-    document.getElementById('tab1Text').innerText = t.tab1;
-    document.getElementById('tab2Text').innerText = t.tab2;
-    document.getElementById('tab3Text').innerText = t.tab3;
-    document.getElementById('tabVocabText').innerText = t.vocab;
-    if (!currentUser) document.getElementById('profileBtnText').innerText = t.profile;
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-bottom: 130px;
+            min-height: 100vh;
+        }
 
-    // Home Tab
-    if (!currentUser) {
-        document.getElementById('welcomeHeading').innerText = t.welcomeHeading;
-    } else {
-        document.getElementById('welcomeHeading').innerText = `${t.welcomeHeading.split(' ')[0]} ${currentUser.name}!`;
-    }
-    
-    // Hero & Stats
-    const heroP = document.querySelector('.hero-banner p');
-    if (heroP) heroP.innerText = t.welcomeDesc;
-    
-    const statBoxes = document.querySelectorAll('.stat-box p');
-    if (statBoxes.length >= 3) {
-        statBoxes[0].innerText = t.statStreakLabel;
-        statBoxes[1].innerText = t.statFocusLabel;
-        statBoxes[2].innerText = t.statVocabLabel;
-    }
+        /* Top Header Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-    // Pomodoro Controls
-    const modeBtns = document.querySelectorAll('.mode-selector .mode-btn');
-    if (modeBtns.length >= 3) {
-        modeBtns[0].innerText = t.presetFocus;
-        modeBtns[1].innerText = t.presetShort;
-        modeBtns[2].innerText = t.presetLong;
-    }
-    
-    const customConfigLabel = document.querySelector('.custom-time-config label');
-    if (customConfigLabel) customConfigLabel.innerHTML = `<i class="fa-solid fa-sliders"></i> ${t.customLabel}`;
-    
-    const setCustomBtn = document.querySelector('.custom-time-config .mode-btn');
-    if (setCustomBtn) setCustomBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${t.setCustomBtn}`;
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
 
-    // Planner & Task Input
-    const cardTitles = document.querySelectorAll('.purple-card h3');
-    if (cardTitles.length >= 4) {
-        cardTitles[0].innerHTML = `<i class="fa-solid fa-bullseye"></i> ${t.todayPriorities}`;
-        cardTitles[1].innerHTML = `<i class="fa-solid fa-chart-line"></i> ${t.dailyReflection}`;
-        cardTitles[2].innerHTML = `<i class="fa-solid fa-book-bookmark"></i> ${t.vocabTitle}`;
-        cardTitles[3].innerHTML = `<i class="fa-solid fa-note-sticky"></i> ${t.sessionNotes}`;
-    }
+        .header-title h1 {
+            font-size: 1.7rem;
+            color: var(--primary-purple);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
 
-    document.getElementById('taskInput').placeholder = t.taskPlaceholder;
-    document.querySelector('.btn-add-task').innerText = t.addTaskBtn;
-    
-    const reflectionP = document.querySelector('.planner-grid p');
-    if (reflectionP) reflectionP.innerText = t.reflectionDesc;
-    document.getElementById('dailyReflectionInput').placeholder = t.reflectionPlaceholder;
-    document.getElementById('sessionNotesInput').placeholder = t.notesPlaceholder;
+        .header-title span {
+            font-size: 0.95rem;
+            color: #9333ea;
+            font-weight: 600;
+        }
 
-    // Vocab Placeholders & Table Headers
-    document.getElementById('vocabWord').placeholder = t.wordPlaceholder;
-    document.getElementById('vocabDef').placeholder = t.defPlaceholder;
-    
-    const vocabThs = document.querySelectorAll('.vocab-table th');
-    if (vocabThs.length >= 4) {
-        vocabThs[0].innerText = t.thWord;
-        vocabThs[1].innerText = t.thDef;
-        vocabThs[2].innerText = t.thStatus;
-        vocabThs[3].innerText = t.thAction;
-    }
-    
-    const addWordBtn = document.querySelector('.vocab-controls .btn-add-task');
-    if (addWordBtn) addWordBtn.innerText = t.addWordBtn;
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+        }
 
-    // Dropdown items
-    const dropdownItems = document.querySelectorAll('.dropdown-item');
-    if (dropdownItems.length >= 3) {
-        dropdownItems[0].innerHTML = `<i class="fa-solid fa-user-pen" style="color: var(--primary-purple);"></i> ${t.editProfile}`;
-        dropdownItems[1].innerHTML = `<i class="fa-solid fa-sliders" style="color: var(--primary-purple);"></i> ${t.settingsTimezone}`;
-        dropdownItems[2].innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> ${t.signOut}`;
-    }
-}
+        /* Dropdown Styling */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--purple-pill);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            padding: 8px 34px 8px 16px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .custom-select:hover {
+            border-color: var(--primary-purple);
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            pointer-events: none;
+        }
+
+        .btn-profile {
+            background-color: var(--primary-purple);
+            color: #ffffff;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-profile:hover {
+            background-color: var(--primary-purple-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Profile Dropdown Menu */
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 110%;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(46, 16, 101, 0.15);
+            width: 210px;
+            z-index: 1500;
+            overflow: hidden;
+            flex-direction: column;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .profile-dropdown.show {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--purple-light);
+            color: var(--primary-purple);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 4px 0;
+        }
+
+        /* Navigation Tabs */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--purple-pill);
+            border: none;
+            color: var(--text-main);
+            padding: 10px 22px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover { background-color: #d8b4fe; }
+
+        .tab-btn.active {
+            background-color: var(--primary-purple);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .purple-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(126, 34, 206, 0.06);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .purple-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-purple);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* HOME TAB */
+        .hero-banner {
+            background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-banner h2 { font-size: 2rem; margin-bottom: 8px; }
+        .hero-banner p { font-size: 1rem; color: #e9d5ff; max-width: 600px; }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: var(--purple-light);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-box h4 {
+            font-size: 2rem;
+            color: var(--primary-purple);
+            margin-top: 5px;
+        }
+
+        /* POMODORO TIMER */
+        .pomodoro-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 35px;
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: var(--purple-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 18px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: var(--primary-purple);
+            color: #fff;
+            border-color: var(--primary-purple);
+        }
+
+        .custom-time-config {
+            background: var(--purple-light);
+            border: 1px dashed var(--border-color);
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .custom-time-config label { font-size: 0.88rem; font-weight: 700; color: var(--text-muted); }
+        .custom-time-config input {
+            width: 70px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-weight: bold;
+            outline: none;
+        }
+
+        .timer-display {
+            font-size: 5.5rem;
+            font-weight: 800;
+            color: var(--primary-purple);
+            letter-spacing: 2px;
+            margin: 10px 0 25px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls { display: flex; justify-content: center; gap: 15px; }
+
+        .btn-timer {
+            background-color: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.3);
+        }
+
+        .btn-timer:hover { background-color: var(--primary-purple-hover); transform: translateY(-2px); }
+
+        .btn-timer-secondary {
+            background-color: var(--purple-pill);
+            color: var(--text-main);
+            border: none;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* PLANNER & TASKS */
+        .planner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        @media (max-width: 768px) { .planner-grid { grid-template-columns: 1fr; } }
+
+        .task-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .task-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            outline: none;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .btn-add-task {
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--purple-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .task-item.completed span { text-decoration: line-through; color: var(--text-muted); }
+        .task-checkbox { accent-color: var(--primary-purple); width: 18px; height: 18px; cursor: pointer; }
+
+        .notes-textarea {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            padding: 14px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            resize: vertical;
+        }
+
+        .empty-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 25px 10px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* VOCABULARY TRACKER */
+        .vocab-controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .vocab-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .vocab-table th, .vocab-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
+        .vocab-table th { color: var(--primary-purple); background: var(--purple-light); }
+
+        .badge-status { padding: 4px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; }
+        .badge-learning { background: #fef08a; color: #854d0e; }
+        .badge-mastered { background: #dcfce7; color: #166534; }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(30, 10, 56, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(46, 16, 101, 0.2);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 { font-size: 1.4rem; color: var(--primary-purple); }
+        .close-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            outline: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .auth-links-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.88rem;
+        }
+
+        .auth-toggle-link {
+            color: var(--primary-purple);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* AUDIO PLAYER BAR */
+        .audio-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 110px;
+            background-color: var(--audio-bar-bg);
+            border-top: 2px solid #4c1d95;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            z-index: 1000;
+            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            gap: 20px;
+        }
+
+        .audio-info-section { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+        .audio-info-section h4 { font-size: 0.95rem; font-weight: 700; color: #ffffff; }
+        .audio-info-section p { font-size: 0.8rem; color: #e9d5ff; }
+
+        .audio-center-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            max-width: 650px;
+        }
+
+        .url-input-wrapper { display: flex; align-items: center; gap: 10px; width: 100%; }
+
+        .bts-dropdown {
+            background-color: #110426;
+            color: #f3e8ff;
+            border: 1px solid #6b21a8;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .time-stamp {
+            font-size: 0.75rem;
+            color: #d8b4fe;
+            min-width: 35px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress-bar {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            border-radius: 5px;
+            background: #4c1d95;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #c084fc;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .progress-bar::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            background: #ffffff;
+        }
+
+        .player-buttons { display: flex; align-items: center; gap: 16px; }
+        .btn-ctrl { background: transparent; border: none; color: #e9d5ff; cursor: pointer; font-size: 1.1rem; }
+        .btn-ctrl:hover { color: #ffffff; transform: scale(1.15); }
+
+        .btn-main-play {
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+        }
+
+        #ytPlayerContainer { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title" onclick="switchTab('home')">
+            <i class="fa-solid fa-moon" style="color: var(--primary-purple); font-size: 1.6rem;"></i>
+            <h1 id="appTitle">퍼플룸</h1>
+            <span>Purple Room</span>
+        </div>
+
+        <div class="header-controls">
+            <div class="select-wrapper">
+                <select class="custom-select" id="timezoneSelect" onchange="handleTimezoneChange(this.value)">
+                    <option value="America/Los_Angeles">Pacific Time (PDT/PST)</option>
+                    <option value="America/New_York">Eastern Time (EDT/EST)</option>
+                    <option value="America/Chicago">Central Time (CDT/CST)</option>
+                    <option value="America/Denver">Mountain Time (MDT/MST)</option>
+                    <option value="UTC">UTC / GMT</option>
+                    <option value="Asia/Seoul">Korea Standard Time (KST)</option>
+                    <option value="Europe/London">London (BST/GMT)</option>
+                </select>
+            </div>
+
+            <div class="select-wrapper">
+                <select class="custom-select" id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="ko">한국어 (Korean)</option>
+                    <option value="en" selected>English</option>
+                    <option value="es">Español</option>
+                </select>
+            </div>
+
+            <div style="position: relative;">
+                <button class="btn-profile" id="profileBtn" onclick="handleProfileClick(event)">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span id="profileBtnText">Sign Up / Log In</span>
+                    <i class="fa-solid fa-chevron-down" id="profileChevron" style="display: none; font-size: 0.75rem;"></i>
+                </button>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item" onclick="openProfileSettingsModal()">
+                        <i class="fa-solid fa-user-pen" style="color: var(--primary-purple);"></i> Edit Profile
+                    </div>
+                    <div class="dropdown-item" onclick="openProfileSettingsModal()">
+                        <i class="fa-solid fa-sliders" style="color: var(--primary-purple);"></i> Settings & Timezone
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" style="color: #dc2626;" onclick="handleSignOut()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <button class="tab-btn active" onclick="switchTab('home', event)">
+            <i class="fa-solid fa-house"></i> <span id="tabHomeText">Home</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('pomodoro', event)">
+            <i class="fa-solid fa-stopwatch"></i> <span id="tab1Text">Pomodoro Timer</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('planner', event)">
+            <i class="fa-solid fa-list-check"></i> <span id="tab2Text">Focus Planner</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('vocab', event)">
+            <i class="fa-solid fa-book-bookmark"></i> <span id="tabVocabText">Vocabulary</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('notes', event)">
+            <i class="fa-solid fa-pen-to-square"></i> <span id="tab3Text">Daily Notes</span>
+        </button>
+    </nav>
+
+    <main>
+        <section id="home" class="tab-content active">
+            <div class="hero-banner">
+                <div>
+                    <h2 id="welcomeHeading">Welcome to 퍼플룸 (Purple Room)</h2>
+                    <p>Your peaceful aesthetic space for deep focus, structured planning, ambient listening, and continuous learning.</p>
+                </div>
+                <i class="fa-solid fa-sparkles" style="font-size: 3.5rem; opacity: 0.8;"></i>
+            </div>
+
+            <div class="home-grid">
+                <div class="stat-box">
+                    <i class="fa-solid fa-fire" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Current Streak</p>
+                    <h4 id="statStreak">0 Days</h4>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-clock" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Focus Hours Today</p>
+                    <h4 id="statFocusTime">0.0 hrs</h4>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-spell-check" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Words Learned</p>
+                    <h4 id="statWordsLearned">0 Words</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="pomodoro" class="tab-content">
+            <div class="pomodoro-card">
+                <div class="mode-selector">
+                    <button class="mode-btn active" onclick="setTimerPreset('work', 25, event)">Focus Preset (25m)</button>
+                    <button class="mode-btn" onclick="setTimerPreset('short', 5, event)">Short Break (5m)</button>
+                    <button class="mode-btn" onclick="setTimerPreset('long', 15, event)">Long Break (15m)</button>
+                </div>
+
+                <div class="custom-time-config">
+                    <label><i class="fa-solid fa-sliders"></i> Custom Minutes:</label>
+                    <input type="number" id="customMinsInput" min="1" max="180" value="25">
+                    <button class="mode-btn" onclick="applyCustomTime()"><i class="fa-solid fa-check"></i> Set Custom</button>
+                </div>
+
+                <div class="timer-display" id="timerDisplay">25:00</div>
+
+                <div class="timer-controls">
+                    <button class="btn-timer" id="startBtn" onclick="toggleTimer()">START</button>
+                    <button class="btn-timer-secondary" onclick="resetTimer()"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="planner" class="tab-content">
+            <div class="planner-grid">
+                <div class="purple-card">
+                    <h3><i class="fa-solid fa-bullseye"></i> Today's Priorities</h3>
+                    <div class="task-input-group">
+                        <input type="text" class="task-input" id="taskInput" placeholder="Add a new task...">
+                        <button class="btn-add-task" onclick="addTask()">Add</button>
+                    </div>
+                    <ul class="task-list" id="taskList"></ul>
+                </div>
+
+                <div class="purple-card">
+                    <h3><i class="fa-solid fa-chart-line"></i> Daily Reflection</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Track your study flow and achievements in 퍼플룸.</p>
+                    <textarea class="notes-textarea" id="dailyReflectionInput" placeholder="Write your daily reflection..." oninput="saveUserData()"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <section id="vocab" class="tab-content">
+            <div class="purple-card">
+                <h3><i class="fa-solid fa-book-bookmark"></i> Vocabulary Tracker</h3>
+                <div class="vocab-controls">
+                    <input type="text" class="task-input" id="vocabWord" placeholder="New word / phrase...">
+                    <input type="text" class="task-input" id="vocabDef" placeholder="Definition / translation...">
+                    <button class="btn-add-task" onclick="addVocabWord()">Add Word</button>
+                </div>
+
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Definition</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vocabTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="notes" class="tab-content">
+            <div class="purple-card">
+                <h3><i class="fa-solid fa-note-sticky"></i> Session Notes</h3>
+                <textarea class="notes-textarea" id="sessionNotesInput" style="height: 320px;" placeholder="Jot down quick thoughts..." oninput="saveUserData()"></textarea>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="authModalTitle">Sign Up First</h2>
+                <button class="close-btn" onclick="closeAuthModal()">×</button>
+            </div>
+
+            <form id="signUpForm" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" id="signUpName" required placeholder="e.g. Min-jun Kim">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="form-control" id="signUpEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="signUpUsername" required placeholder="username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="signUpPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>Security Question</label>
+                    <select class="form-control" id="signUpSecurityQuestion" required>
+                        <option value="" disabled selected>-- Select a Security Question --</option>
+                        <option value="1">What was your childhood nickname?</option>
+                        <option value="2">In what city or town were you born?</option>
+                        <option value="3">What is the name of your favorite pet?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Security Answer</label>
+                    <input type="text" class="form-control" id="signUpSecurityAnswer" required placeholder="Your answer...">
+                </div>
+                <button type="submit" class="btn-submit">Create Account</button>
+                <div class="auth-links-row">
+                    <span></span>
+                    <span class="auth-toggle-link" onclick="toggleAuthView('login')">Already have an account? Log In</span>
+                </div>
+            </form>
+
+            <form id="loginForm" style="display: none;" onsubmit="handleLogIn(event)">
+                <div class="form-group">
+                    <label>Email or Username</label>
+                    <input type="text" class="form-control" id="loginIdentifier" required placeholder="Enter email or username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+                <div class="auth-links-row">
+                    <span class="auth-toggle-link" onclick="toggleAuthView('forgot')">Forgot Password?</span>
+                    <span class="auth-toggle-link" onclick="toggleAuthView('signup')">Don't have an account? Sign Up</span>
+                </div>
+            </form>
+
+            <form id="forgotForm" style="display: none;" onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <label>Registered Email or Username</label>
+                    <input type="text" class="form-control" id="forgotIdentifier" required placeholder="Enter email or username">
+                </div>
+                <div class="form-group">
+                    <label>Select Your Security Question</label>
+                    <select class="form-control" id="forgotSecurityQuestion" required>
+                        <option value="" disabled selected>-- Select your Question --</option>
+                        <option value="1">What was your childhood nickname?</option>
+                        <option value="2">In what city or town were you born?</option>
+                        <option value="3">What is the name of your favorite pet?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Security Answer</label>
+                    <input type="text" class="form-control" id="forgotSecurityAnswer" required placeholder="Enter your secret answer">
+                </div>
+                <button type="submit" class="btn-submit">Recover Password</button>
+                <div class="auth-links-row">
+                    <span class="auth-toggle-link" onclick="toggleAuthView('login')">Back to Log In</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="profileSettingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Account & Profile Settings</h2>
+                <button class="close-btn" onclick="closeProfileSettingsModal()">×</button>
+            </div>
+            <form onsubmit="handleSaveProfileSettings(event)">
+                <div class="form-group">
+                    <label>Display Name</label>
+                    <input type="text" class="form-control" id="editDisplayName" required>
+                </div>
+                <div class="form-group">
+                    <label>Username (Read-Only)</label>
+                    <input type="text" class="form-control" id="editUsername" disabled style="opacity: 0.7;">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Timezone</label>
+                    <select class="form-control" id="editTimezone">
+                        <option value="America/Los_Angeles">Pacific Time (PDT/PST)</option>
+                        <option value="America/New_York">Eastern Time (EDT/EST)</option>
+                        <option value="America/Chicago">Central Time (CDT/CST)</option>
+                        <option value="America/Denver">Mountain Time (MDT/MST)</option>
+                        <option value="UTC">UTC / GMT</option>
+                        <option value="Asia/Seoul">Korea Standard Time (KST)</option>
+                        <option value="Europe/London">London (BST/GMT)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>New Password (leave blank to keep current)</label>
+                    <input type="password" class="form-control" id="editPassword" placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-submit">Save Settings</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="audio-bar">
+        <div class="audio-info-section">
+            <h4 id="audioTrackTitle">Fake Love</h4>
+            <p id="audioTrackArtist">BTS - Audio Player</p>
+        </div>
+
+        <div class="audio-center-controls">
+            <div class="url-input-wrapper">
+                <select class="bts-dropdown" id="btsSelect" onchange="playBtsAudioTrack(this.value)">
+                    <option value="0">1. Fake Love</option>
+                    <option value="1">2. Blood Sweat & Tears</option>
+                    <option value="2">3. Swim</option>
+                    <option value="3">4. Who (Jimin)</option>
+                    <option value="4">5. Butter</option>
+                    <option value="5">6. Seven (Jungkook)</option>
+                    <option value="6">7. Dynamite</option>
+                </select>
+            </div>
+
+            <div class="progress-wrapper">
+                <span class="time-stamp" id="currentTimeDisplay">0:00</span>
+                <input type="range" class="progress-bar" id="audioSeekBar" value="0" min="0" max="100" oninput="seekAudio(this.value)">
+                <span class="time-stamp" id="durationDisplay">0:00</span>
+            </div>
+
+            <div class="player-buttons">
+                <button class="btn-ctrl" onclick="prevAudioTrack()"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="btn-ctrl" onclick="rewindAudio(10)"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="btn-main-play" onclick="toggleAudioPlay()" id="mainPlayBtn"><i class="fa-solid fa-play"></i></button>
+                <button class="btn-ctrl" onclick="forwardAudio(10)"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="btn-ctrl" onclick="nextAudioTrack()"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ytPlayerContainer">
+        <div id="youtube-audio-engine"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        /* YOUTUBE AUDIO ENGINE INTEGRATION */
+        const playlistData = [
+            { title: "Fake Love", id: "NT8ePWlgx_Y" },
+            { title: "Blood Sweat & Tears", id: "tuEZ_8HdnwQ" },
+            { title: "Swim", id: "qZTVU04UOO4" },
+            { title: "Who (Jimin)", id: "sEcvQvftOQY" },
+            { title: "Butter", id: "NNCBq0JHXsU" },
+            { title: "Seven (Jungkook)", id: "5McUFZz2s-w" },
+            { title: "Dynamite", id: "HaEYUJ2aRHs" }
+        ];
+
+        let ytPlayer = null;
+        let currentTrackIdx = 0;
+        let isPlaying = false;
+        let progressInterval = null;
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('youtube-audio-engine', {
+                height: '0', width: '0',
+                videoId: playlistData[0].id,
+                playerVars: { 'autoplay': 0, 'controls': 0 },
+                events: { 'onStateChange': onPlayerStateChange }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.getElementById('mainPlayBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                startProgressTracker();
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                document.getElementById('mainPlayBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+                stopProgressTracker();
+                if (event.data === YT.PlayerState.ENDED) nextAudioTrack();
+            }
+        }
+
+        function formatTime(seconds) {
+            if (isNaN(seconds) || seconds < 0) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function startProgressTracker() {
+            stopProgressTracker();
+            progressInterval = setInterval(() => {
+                if (ytPlayer && ytPlayer.getCurrentTime && ytPlayer.getDuration) {
+                    const currentTime = ytPlayer.getCurrentTime();
+                    const duration = ytPlayer.getDuration();
+                    document.getElementById('currentTimeDisplay').innerText = formatTime(currentTime);
+                    document.getElementById('durationDisplay').innerText = formatTime(duration);
+                    if (duration > 0) {
+                        document.getElementById('audioSeekBar').value = (currentTime / duration) * 100;
+                    }
+                }
+            }, 500);
+        }
+
+        function stopProgressTracker() {
+            if (progressInterval) clearInterval(progressInterval);
+        }
+
+        function seekAudio(value) {
+            if (ytPlayer && ytPlayer.getDuration) {
+                ytPlayer.seekTo((value / 100) * ytPlayer.getDuration(), true);
+            }
+        }
+
+        function rewindAudio(sec) {
+            if (ytPlayer && ytPlayer.getCurrentTime) {
+                ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() - sec), true);
+            }
+        }
+
+        function forwardAudio(sec) {
+            if (ytPlayer && ytPlayer.getCurrentTime && ytPlayer.getDuration) {
+                ytPlayer.seekTo(Math.min(ytPlayer.getDuration(), ytPlayer.getCurrentTime() + sec), true);
+            }
+        }
+
+        function toggleAudioPlay() {
+            if (!ytPlayer) return;
+            isPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
+        }
+
+        function playBtsAudioTrack(idx) {
+            currentTrackIdx = parseInt(idx);
+            document.getElementById('audioTrackTitle').innerText = playlistData[currentTrackIdx].title;
+            if (ytPlayer && ytPlayer.loadVideoById) {
+                ytPlayer.loadVideoById(playlistData[currentTrackIdx].id);
+            }
+        }
+
+        function nextAudioTrack() {
+            currentTrackIdx = (currentTrackIdx + 1) % playlistData.length;
+            document.getElementById('btsSelect').value = currentTrackIdx;
+            playBtsAudioTrack(currentTrackIdx);
+        }
+
+        function prevAudioTrack() {
+            currentTrackIdx = (currentTrackIdx - 1 + playlistData.length) % playlistData.length;
+            document.getElementById('btsSelect').value = currentTrackIdx;
+            playBtsAudioTrack(currentTrackIdx);
+        }
+
+        /* MULTI-LANGUAGE TRANSLATION SYSTEM */
+        const translations = {
+            en: {
+                appTitle: "퍼플룸", home: "Home", tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", vocab: "Vocabulary", profile: "Sign Up / Log In",
+                welcomeHeading: "Welcome to 퍼플룸 (Purple Room)", welcomeDesc: "Your peaceful aesthetic space for deep focus, structured planning, ambient listening, and continuous learning.",
+                statStreakLabel: "Current Streak", statFocusLabel: "Focus Hours Today", statVocabLabel: "Words Learned",
+                presetFocus: "Focus Preset (25m)", presetShort: "Short Break (5m)", presetLong: "Long Break (15m)", customLabel: "Custom Minutes:", setCustomBtn: "Set Custom",
+                todayPriorities: "Today's Priorities", taskPlaceholder: "Add a new task...", addTaskBtn: "Add",
+                dailyReflection: "Daily Reflection", reflectionDesc: "Track your study flow and achievements in 퍼플룸.", reflectionPlaceholder: "Write your daily reflection...",
+                sessionNotes: "Session Notes", notesPlaceholder: "Jot down quick thoughts...",
+                vocabTitle: "Vocabulary Tracker", wordPlaceholder: "New word / phrase...", defPlaceholder: "Definition / translation...", addWordBtn: "Add Word",
+                thWord: "Word", thDef: "Definition", thStatus: "Status", thAction: "Action",
+                editProfile: "Edit Profile", settingsTimezone: "Settings & Timezone", signOut: "Sign Out"
+            },
+            ko: {
+                appTitle: "퍼플룸", home: "홈", tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", vocab: "단어장", profile: "회원가입 / 로그인",
+                welcomeHeading: "퍼플룸(Purple Room)에 오신 것을 환영합니다", welcomeDesc: "몰입형 집중, 계획 작성, 힐링 음악 감상 및 지속적인 학습을 위한 평화로운 공간입니다.",
+                statStreakLabel: "현재 연속 달성", statFocusLabel: "오늘 집중 시간", statVocabLabel: "학습한 단어 수",
+                presetFocus: "집중 모드 (25분)", presetShort: "짧은 휴식 (5분)", presetLong: "긴 휴식 (15분)", customLabel: "사용자 설정 (분):", setCustomBtn: "설정 완료",
+                todayPriorities: "오늘의 우선순위", taskPlaceholder: "새 할 일을 입력하세요...", addTaskBtn: "추가",
+                dailyReflection: "일일 회고", reflectionDesc: "퍼플룸에서의 학습 흐름과 성과를 기록하세요.", reflectionPlaceholder: "오늘의 회고를 작성해보세요...",
+                sessionNotes: "세션 노트", notesPlaceholder: "빠른 아이디어나 메모를 남기세요...",
+                vocabTitle: "단어장 트래커", wordPlaceholder: "새 단어 / 표현...", defPlaceholder: "뜻 / 번역...", addWordBtn: "단어 추가",
+                thWord: "단어", thDef: "뜻", thStatus: "상태", thAction: "작동",
+                editProfile: "프로필 수정", settingsTimezone: "설정 및 시간대", signOut: "로그아웃"
+            },
+            es: {
+                appTitle: "Purple Room", home: "Inicio", tab1: "Temporizador", tab2: "Planificador", tab3: "Notas Diarias", vocab: "Vocabulario", profile: "Registro / Iniciar",
+                welcomeHeading: "Bienvenido a 퍼플룸 (Purple Room)", welcomeDesc: "Tu espacio estético y tranquilo para la concentración profunda, planificación y aprendizaje continuo.",
+                statStreakLabel: "Racha Actual", statFocusLabel: "Horas de Enfoque Hoy", statVocabLabel: "Palabras Aprendidas",
+                presetFocus: "Modo Enfoque (25m)", presetShort: "Descanso Corto (5m)", presetLong: "Descanso Largo (15m)", customLabel: "Minutos Personalizados:", setCustomBtn: "Establecer",
+                todayPriorities: "Prioridades de Hoy", taskPlaceholder: "Añadir nueva tarea...", addTaskBtn: "Añadir",
+                dailyReflection: "Reflexión Diaria", reflectionDesc: "Registra tu progreso y logros diarios en 퍼플룸.", reflectionPlaceholder: "Escribe tu reflexión diaria...",
+                sessionNotes: "Notas de la Sesión", notesPlaceholder: "Escribe notas rápidas...",
+                vocabTitle: "Registro de Vocabulario", wordPlaceholder: "Nueva palabra...", defPlaceholder: "Definición...", addWordBtn: "Añadir Palabra",
+                thWord: "Palabra", thDef: "Definición", thStatus: "Estado", thAction: "Acción",
+                editProfile: "Editar Perfil", settingsTimezone: "Ajustes y Zona Horaria", signOut: "Cerrar Sesión"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage(langKey) {
+            currentLang = langKey;
+            const t = translations[langKey] || translations.en;
+            
+            document.getElementById('tabHomeText').innerText = t.home;
+            document.getElementById('tab1Text').innerText = t.tab1;
+            document.getElementById('tab2Text').innerText = t.tab2;
+            document.getElementById('tab3Text').innerText = t.tab3;
+            document.getElementById('tabVocabText').innerText = t.vocab;
+            if (!currentUser) document.getElementById('profileBtnText').innerText = t.profile;
+
+            if (!currentUser) {
+                document.getElementById('welcomeHeading').innerText = t.welcomeHeading;
+            } else {
+                document.getElementById('welcomeHeading').innerText = `${t.welcomeHeading.split(' ')[0]} ${currentUser.name}!`;
+            }
+
+            document.querySelector('.hero-banner p').innerText = t.welcomeDesc;
+            
+            const statBoxes = document.querySelectorAll('.stat-box p');
+            statBoxes[0].innerText = t.statStreakLabel;
+            statBoxes[1].innerText = t.statFocusLabel;
+            statBoxes[2].innerText = t.statVocabLabel;
+
+            const modeBtns = document.querySelectorAll('.mode-selector .mode-btn');
+            modeBtns[0].innerText = t.presetFocus;
+            modeBtns[1].innerText = t.presetShort;
+            modeBtns[2].innerText = t.presetLong;
+            
+            document.querySelector('.custom-time-config label').innerHTML = `<i class="fa-solid fa-sliders"></i> ${t.customLabel}`;
+            document.querySelector('.custom-time-config .mode-btn').innerHTML = `<i class="fa-solid fa-check"></i> ${t.setCustomBtn}`;
+
+            const cardTitles = document.querySelectorAll('.purple-card h3');
+            cardTitles[0].innerHTML = `<i class="fa-solid fa-bullseye"></i> ${t.todayPriorities}`;
+            cardTitles[1].innerHTML = `<i class="fa-solid fa-chart-line"></i> ${t.dailyReflection}`;
+            cardTitles[2].innerHTML = `<i class="fa-solid fa-book-bookmark"></i> ${t.vocabTitle}`;
+            cardTitles[3].innerHTML = `<i class="fa-solid fa-note-sticky"></i> ${t.sessionNotes}`;
+
+            document.getElementById('taskInput').placeholder = t.taskPlaceholder;
+            document.querySelector('.btn-add-task').innerText = t.addTaskBtn;
+            document.querySelector('.planner-grid p').innerText = t.reflectionDesc;
+            document.getElementById('dailyReflectionInput').placeholder = t.reflectionPlaceholder;
+            document.getElementById('sessionNotesInput').placeholder = t.notesPlaceholder;
+
+            document.getElementById('vocabWord').placeholder = t.wordPlaceholder;
+            document.getElementById('vocabDef').placeholder = t.defPlaceholder;
+            
+            const vocabThs = document.querySelectorAll('.vocab-table th');
+            vocabThs[0].innerText = t.thWord;
+            vocabThs[1].innerText = t.thDef;
+            vocabThs[2].innerText = t.thStatus;
+            vocabThs[3].innerText = t.thAction;
+            document.querySelector('.vocab-controls .btn-add-task').innerText = t.addWordBtn;
+
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems[0].innerHTML = `<i class="fa-solid fa-user-pen" style="color: var(--primary-purple);"></i> ${t.editProfile}`;
+            dropdownItems[1].innerHTML = `<i class="fa-solid fa-sliders" style="color: var(--primary-purple);"></i> ${t.settingsTimezone}`;
+            dropdownItems[2].innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> ${t.signOut}`;
+        }
+
+        /* NAVIGATION */
+        function switchTab(tabId, event) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (event) event.currentTarget.classList.add('active');
+        }
+
+        /* TIMEZONE & DAILY STREAK */
+        let currentTimeZone = "America/Los_Angeles";
+
+        function getFormattedDateInTimezone(tz) {
+            return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        }
+
+        function handleTimezoneChange(newTz) {
+            currentTimeZone = newTz;
+            if (currentUser) {
+                userData.selectedTimezone = newTz;
+                verifyAndCalculateStreak();
+                saveUserData();
+            }
+        }
+
+        function verifyAndCalculateStreak() {
+            const todayStr = getFormattedDateInTimezone(currentTimeZone);
+            if (!userData.lastLogDate) {
+                userData.streakDays = 1;
+                userData.lastLogDate = todayStr;
+            } else if (userData.lastLogDate !== todayStr) {
+                const diffDays = Math.ceil(Math.abs(new Date(todayStr) - new Date(userData.lastLogDate)) / (1000 * 60 * 60 * 24));
+                userData.streakDays = (diffDays === 1) ? userData.streakDays + 1 : 1;
+                userData.focusMinutesToday = 0;
+                userData.lastLogDate = todayStr;
+            }
+            renderUserData();
+        }
+
+        /* USER DATA & STORAGE */
+        let currentUser = null;
+        let userData = { streakDays: 0, lastLogDate: null, selectedTimezone: "America/Los_Angeles", focusMinutesToday: 0, tasks: [], vocabList: [], dailyReflection: "", sessionNotes: "" };
+
+        function loadAccountData(username) {
+            const stored = localStorage.getItem(`purple_room_user_${username}`);
+            userData = stored ? JSON.parse(stored) : { streakDays: 0, lastLogDate: null, selectedTimezone: currentTimeZone, focusMinutesToday: 0, tasks: [], vocabList: [], dailyReflection: "", sessionNotes: "" };
+            if (userData.selectedTimezone) {
+                currentTimeZone = userData.selectedTimezone;
+                document.getElementById('timezoneSelect').value = currentTimeZone;
+            }
+            verifyAndCalculateStreak();
+            saveUserData();
+            renderUserData();
+        }
+
+        function saveUserData() {
+            if (!currentUser) return;
+            userData.dailyReflection = document.getElementById('dailyReflectionInput').value;
+            userData.sessionNotes = document.getElementById('sessionNotesInput').value;
+            localStorage.setItem(`purple_room_user_${currentUser.username}`, JSON.stringify(userData));
+        }
+
+        function renderUserData() {
+            document.getElementById('statStreak').innerText = `${userData.streakDays} Days`;
+            document.getElementById('statFocusTime').innerText = `${(userData.focusMinutesToday / 60).toFixed(1)} hrs`;
+            document.getElementById('statWordsLearned').innerText = `${userData.vocabList.length} Words`;
+            document.getElementById('dailyReflectionInput').value = userData.dailyReflection || '';
+            document.getElementById('sessionNotesInput').value = userData.sessionNotes || '';
+
+            const taskUl = document.getElementById('taskList');
+            taskUl.innerHTML = userData.tasks.length ? '' : '<div class="empty-placeholder">No priority tasks added yet.</div>';
+            userData.tasks.forEach((t, index) => {
+                taskUl.innerHTML += `
+                    <li class="task-item ${t.completed ? 'completed' : ''}">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="task-checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+                            <span>${t.text}</span>
+                        </div>
+                        <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(${index})"></i>
+                    </li>`;
+            });
+
+            const vocabTbody = document.getElementById('vocabTableBody');
+            vocabTbody.innerHTML = userData.vocabList.length ? '' : '<tr><td colspan="4" class="empty-placeholder">No vocabulary words tracked yet.</td></tr>';
+            userData.vocabList.forEach((v, index) => {
+                vocabTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${v.word}</strong></td>
+                        <td>${v.def}</td>
+                        <td><span class="badge-status ${v.mastered ? 'badge-mastered' : 'badge-learning'}">${v.mastered ? 'Mastered' : 'Learning'}</span></td>
+                        <td><button class="mode-btn" onclick="toggleVocabStatus(${index})">Toggle</button></td>
+                    </tr>`;
+            });
+        }
+
+        /* AUTH & DROPDOWN */
+        function handleProfileClick(e) {
+            e.stopPropagation();
+            currentUser ? document.getElementById('profileDropdown').classList.toggle('show') : openAuthModal();
+        }
+
+        window.addEventListener('click', () => {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
+        });
+
+        function handleSignOut() {
+            saveUserData();
+            currentUser = null;
+            document.getElementById('profileBtnText').innerText = translations[currentLang].profile;
+            document.getElementById('profileChevron').style.display = "none";
+            document.getElementById('welcomeHeading').innerText = translations[currentLang].welcomeHeading;
+            userData = { streakDays: 0, lastLogDate: null, selectedTimezone: currentTimeZone, focusMinutesToday: 0, tasks: [], vocabList: [], dailyReflection: "", sessionNotes: "" };
+            renderUserData();
+            alert("Signed out successfully.");
+        }
+
+        function openProfileSettingsModal() {
+            document.getElementById('profileDropdown').classList.remove('show');
+            if (!currentUser) return;
+            document.getElementById('editDisplayName').value = currentUser.name;
+            document.getElementById('editUsername').value = currentUser.username;
+            document.getElementById('editTimezone').value = currentTimeZone;
+            document.getElementById('editPassword').value = '';
+            document.getElementById('profileSettingsModal').classList.add('active');
+        }
+
+        function closeProfileSettingsModal() { document.getElementById('profileSettingsModal').classList.remove('active'); }
+
+        function handleSaveProfileSettings(e) {
+            e.preventDefault();
+            const newName = document.getElementById('editDisplayName').value.trim();
+            const newTz = document.getElementById('editTimezone').value;
+            const newPw = document.getElementById('editPassword').value.trim();
+            if (!newName) return;
+
+            currentUser.name = newName;
+            const creds = JSON.parse(localStorage.getItem(`purple_creds_${currentUser.username}`));
+            creds.name = newName;
+            if (newPw) creds.password = newPw;
+            localStorage.setItem(`purple_creds_${currentUser.username}`, JSON.stringify(creds));
+
+            document.getElementById('timezoneSelect').value = newTz;
+            handleTimezoneChange(newTz);
+            updateUserHeader();
+            closeProfileSettingsModal();
+            alert("Settings updated!");
+        }
+
+        function openAuthModal() { document.getElementById('authModal').classList.add('active'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
+
+        function toggleAuthView(view) {
+            document.getElementById('signUpForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotForm').style.display = 'none';
+
+            if (view === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('authModalTitle').innerText = 'Log In';
+            } else if (view === 'forgot') {
+                document.getElementById('forgotForm').style.display = 'block';
+                document.getElementById('authModalTitle').innerText = 'Forgot Password';
+            } else {
+                document.getElementById('signUpForm').style.display = 'block';
+                document.getElementById('authModalTitle').innerText = 'Sign Up First';
+            }
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value.trim();
+            const email = document.getElementById('signUpEmail').value.trim().toLowerCase();
+            const username = document.getElementById('signUpUsername').value.trim().toLowerCase();
+            const password = document.getElementById('signUpPassword').value;
+            const secQuestion = document.getElementById('signUpSecurityQuestion').value;
+            const secAnswer = document.getElementById('signUpSecurityAnswer').value.trim().toLowerCase();
+
+            localStorage.setItem(`purple_creds_${username}`, JSON.stringify({ name, email, username, password, secQuestion, secAnswer }));
+            localStorage.setItem(`purple_email_lookup_${email}`, username);
+
+            currentUser = { name, username, email };
+            updateUserHeader();
+            loadAccountData(username);
+            closeAuthModal();
+        }
+
+        function handleLogIn(e) {
+            e.preventDefault();
+            const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value;
+
+            let username = identifier.includes('@') ? localStorage.getItem(`purple_email_lookup_${identifier}`) : identifier;
+            const storedCreds = localStorage.getItem(`purple_creds_${username}`);
+            
+            if (!storedCreds || JSON.parse(storedCreds).password !== password) {
+                alert("Invalid username or password.");
+                return;
+            }
+
+            const creds = JSON.parse(storedCreds);
+            currentUser = { name: creds.name, username: creds.username, email: creds.email };
+            updateUserHeader();
+            loadAccountData(username);
+            closeAuthModal();
+        }
+
+        function handleForgotPassword(e) {
+            e.preventDefault();
+            const identifier = document.getElementById('forgotIdentifier').value.trim().toLowerCase();
+            const secQuestion = document.getElementById('forgotSecurityQuestion').value;
+            const secAnswer = document.getElementById('forgotSecurityAnswer').value.trim().toLowerCase();
+
+            let username = identifier.includes('@') ? localStorage.getItem(`purple_email_lookup_${identifier}`) : identifier;
+            const creds = JSON.parse(localStorage.getItem(`purple_creds_${username}`) || '{}');
+
+            if (creds.secQuestion === secQuestion && creds.secAnswer === secAnswer) {
+                const newPw = prompt(`Verified! Current password is "${creds.password}". Enter a new password:`, creds.password);
+                if (newPw) {
+                    creds.password = newPw;
+                    localStorage.setItem(`purple_creds_${username}`, JSON.stringify(creds));
+                    alert("Password updated!");
+                }
+                toggleAuthView('login');
+            } else {
+                alert("Security answer did not match.");
+            }
+        }
+
+        function updateUserHeader() {
+            document.getElementById('profileBtnText').innerText = currentUser.name;
+            document.getElementById('profileChevron').style.display = "inline-block";
+            document.getElementById('welcomeHeading').innerText = `Welcome back, ${currentUser.name}!`;
+        }
+
+        /* POMODORO TIMER LOGIC (WITH PERSISTENCE) */
+        let timerSeconds = 25 * 60;
+        let sessionLengthMinutes = 25;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedEndTime = localStorage.getItem('purple_timer_end');
+            if (savedEndTime) {
+                const remaining = Math.round((parseInt(savedEndTime) - Date.now()) / 1000);
+                if (remaining > 0) {
+                    timerSeconds = remaining;
+                    updateTimerDisplay();
+                    toggleTimer();
+                } else {
+                    localStorage.removeItem('purple_timer_end');
+                }
+            }
+        });
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function setTimerPreset(mode, mins, event) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            if (event) event.currentTarget.classList.add('active');
+            document.getElementById('customMinsInput').value = mins;
+            applyTime(mins);
+        }
+
+        function applyCustomTime() {
+            applyTime(parseInt(document.getElementById('customMinsInput').value) || 25);
+        }
+
+        function applyTime(mins) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('startBtn').innerText = 'START';
+            localStorage.removeItem('purple_timer_end');
+            sessionLengthMinutes = mins;
+            timerSeconds = mins * 60;
+            updateTimerDisplay();
+        }
+
+        function toggleTimer() {
+            const startBtn = document.getElementById('startBtn');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                startBtn.innerText = 'START';
+                localStorage.removeItem('purple_timer_end');
+            } else {
+                isTimerRunning = true;
+                startBtn.innerText = 'PAUSE';
+                const targetEndTime = Date.now() + (timerSeconds * 1000);
+                localStorage.setItem('purple_timer_end', targetEndTime);
+
+                timerInterval = setInterval(() => {
+                    const remaining = Math.round((targetEndTime - Date.now()) / 1000);
+                    if (remaining > 0) {
+                        timerSeconds = remaining;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        startBtn.innerText = 'START';
+                        localStorage.removeItem('purple_timer_end');
+                        userData.focusMinutesToday += sessionLengthMinutes;
+                        saveUserData();
+                        renderUserData();
+                        alert('Focus session complete!');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() { applyTime(sessionLengthMinutes); }
+
+        /* TASK & VOCAB LOGIC */
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            if (!input.value.trim()) return;
+            userData.tasks.push({ text: input.value.trim(), completed: false });
+            saveUserData(); renderUserData();
+            input.value = '';
+        }
+
+        function toggleTask(idx) { userData.tasks[idx].completed = !userData.tasks[idx].completed; saveUserData(); renderUserData(); }
+        function deleteTask(idx) { userData.tasks.splice(idx, 1); saveUserData(); renderUserData(); }
+
+        function addVocabWord() {
+            const word = document.getElementById('vocabWord').value.trim();
+            const def = document.getElementById('vocabDef').value.trim();
+            if (!word || !def) return;
+            userData.vocabList.push({ word, def, mastered: false });
+            saveUserData(); renderUserData();
+            document.getElementById('vocabWord').value = '';
+            document.getElementById('vocabDef').value = '';
+        }
+
+        function toggleVocabStatus(idx) { userData.vocabList[idx].mastered = !userData.vocabList[idx].mastered; saveUserData(); renderUserData(); }
+
+        renderUserData();
+    </script>
+</body>
+</html>
