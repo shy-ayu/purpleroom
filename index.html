@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>퍼플룸 (Purple Room) - Focus & Planner</title>
+    <title>퍼플룸 (Purple Room) - Focus & Study Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #f5f0bb; /* Soft Lilac Tint Background */
             --bg-main: #f3e8ff; 
             --bg-card: #ffffff;
             --text-main: #2e1065;
@@ -18,6 +17,7 @@
             --purple-pill: #e9d5ff;
             --border-color: #d8b4fe;
             --audio-bar-bg: #1e0a38;
+            --success-green: #10b981;
         }
 
         * {
@@ -30,7 +30,7 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 130px; /* Room for fixed bottom audio bar */
+            padding-bottom: 120px; /* Room for fixed bottom audio bar */
             min-height: 100vh;
         }
 
@@ -48,6 +48,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
         }
 
         .header-title h1 {
@@ -106,7 +107,7 @@
             pointer-events: none;
         }
 
-        /* Profile & Log In Button */
+        /* Auth / Profile Button */
         .btn-profile {
             background-color: var(--primary-purple);
             color: #ffffff;
@@ -134,13 +135,14 @@
             justify-content: center;
             gap: 12px;
             padding: 18px 10px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             background: var(--purple-pill);
             border: none;
             color: var(--text-main);
-            padding: 10px 24px;
+            padding: 10px 22px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.95rem;
@@ -161,7 +163,7 @@
             box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
         }
 
-        /* Container Layout */
+        /* Main Container Layout */
         main {
             max-width: 1100px;
             margin: 0 auto;
@@ -182,14 +184,77 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Pomodoro Timer Section */
+        /* Common Cards */
+        .purple-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(126, 34, 206, 0.06);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .purple-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-purple);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* TAB 0: HOME WEBPAGE PAGE */
+        .hero-banner {
+            background: linear-gradient(135deg, #7e22ce 0%, #3b0764 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-banner h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-banner p {
+            font-size: 1.05rem;
+            color: #e9d5ff;
+            max-width: 600px;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: var(--purple-light);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-box h4 {
+            font-size: 2.2rem;
+            color: var(--primary-purple);
+            margin-top: 5px;
+        }
+
+        /* TAB 1: POMODORO TIMER & CUSTOM TIME CONTROLS */
         .pomodoro-card {
             background: var(--bg-card);
             border-radius: 24px;
-            padding: 40px;
+            padding: 35px;
             text-align: center;
-            max-width: 550px;
-            margin: 10px auto 30px;
+            max-width: 620px;
+            margin: 0 auto 30px;
             box-shadow: 0 10px 30px rgba(126, 34, 206, 0.08);
             border: 1px solid var(--border-color);
         }
@@ -199,6 +264,7 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         .mode-btn {
@@ -219,12 +285,41 @@
             border-color: var(--primary-purple);
         }
 
+        .custom-time-config {
+            background: var(--purple-light);
+            border: 1px dashed var(--border-color);
+            padding: 15px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .custom-time-config label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .custom-time-config input {
+            width: 70px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-weight: bold;
+            outline: none;
+        }
+
         .timer-display {
             font-size: 5.5rem;
             font-weight: 800;
             color: var(--primary-purple);
             letter-spacing: 2px;
-            margin: 15px 0 25px;
+            margin: 10px 0 25px;
             font-variant-numeric: tabular-nums;
         }
 
@@ -264,11 +359,7 @@
             transition: all 0.2s;
         }
 
-        .btn-timer-secondary:hover {
-            background-color: #d8b4fe;
-        }
-
-        /* Planner & Task Section */
+        /* TAB 2: PLANNER */
         .planner-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -277,23 +368,6 @@
 
         @media (max-width: 768px) {
             .planner-grid { grid-template-columns: 1fr; }
-        }
-
-        .planner-card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(126, 34, 206, 0.06);
-            border: 1px solid var(--border-color);
-        }
-
-        .planner-card h3 {
-            font-size: 1.3rem;
-            color: var(--primary-purple);
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .task-input-group {
@@ -313,10 +387,6 @@
             color: var(--text-main);
         }
 
-        .task-input:focus {
-            border-color: var(--primary-purple);
-        }
-
         .btn-add-task {
             background: var(--primary-purple);
             color: #fff;
@@ -325,11 +395,6 @@
             border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-add-task:hover {
-            background: var(--primary-purple-hover);
         }
 
         .task-list {
@@ -374,7 +439,41 @@
             resize: vertical;
         }
 
-        /* PROFILE MODAL SYSTEM */
+        /* TAB 4: VOCABULARY TRACKER */
+        .vocab-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .vocab-table th, .vocab-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vocab-table th {
+            color: var(--primary-purple);
+            background: var(--purple-light);
+        }
+
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .badge-learning { background: #fef08a; color: #854d0e; }
+        .badge-mastered { background: #dcfce7; color: #166534; }
+
+        /* MODALS (Auth & Profile Settings) */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -386,16 +485,14 @@
             justify-content: center;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
-        .profile-modal {
+        .modal-card {
             background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 24px;
             width: 90%;
-            max-width: 480px;
+            max-width: 500px;
             padding: 30px;
             box-shadow: 0 15px 35px rgba(46, 16, 101, 0.2);
             position: relative;
@@ -410,31 +507,11 @@
             margin-bottom: 20px;
         }
 
-        .modal-header h2 {
-            font-size: 1.4rem;
-            color: var(--primary-purple);
-        }
+        .modal-header h2 { font-size: 1.4rem; color: var(--primary-purple); }
+        .close-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; }
 
-        .close-modal-btn {
-            background: transparent;
-            border: none;
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 6px;
-        }
-
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; }
         .form-control {
             width: 100%;
             padding: 10px 14px;
@@ -442,24 +519,9 @@
             border: 1px solid var(--border-color);
             background: var(--purple-light);
             outline: none;
-            font-size: 0.92rem;
-            color: var(--text-main);
         }
 
-        .form-control:focus {
-            border-color: var(--primary-purple);
-        }
-
-        .privacy-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-top: 1px dashed var(--border-color);
-            margin-top: 10px;
-        }
-
-        .btn-save-profile {
+        .btn-submit {
             width: 100%;
             background: var(--primary-purple);
             color: #fff;
@@ -467,48 +529,53 @@
             padding: 12px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.2s;
-        }
-
-        .btn-save-profile:hover {
-            background: var(--primary-purple-hover);
-        }
-
-        .btn-logout {
-            width: 100%;
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fca5a5;
-            padding: 10px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.92rem;
             cursor: pointer;
             margin-top: 10px;
-            transition: background 0.2s;
         }
 
-        .btn-logout:hover {
-            background: #fca5a5;
-            color: #991b1b;
+        .auth-toggle-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.88rem;
+            color: var(--primary-purple);
+            cursor: pointer;
+            text-decoration: underline;
         }
 
-        /* BACKGROUND AUDIO & MUSIC PLAYER BAR */
+        /* Profile Modal Tabs */
+        .profile-nav-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .profile-nav-btn {
+            background: none;
+            border: none;
+            padding: 8px 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .profile-nav-btn.active {
+            color: var(--primary-purple);
+            border-bottom-color: var(--primary-purple);
+        }
+
+        /* BOTTOM BACKGROUND AUDIO BAR (NO EMBEDDED VIDEO) */
         .audio-bar {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 110px;
+            bottom: 0; left: 0; right: 0;
+            height: 100px;
             background-color: var(--audio-bar-bg);
             border-top: 2px solid #4c1d95;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 25px;
+            padding: 0 30px;
             z-index: 1000;
             box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.5);
             color: #ffffff;
@@ -518,28 +585,19 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            min-width: 180px;
+            min-width: 200px;
         }
 
-        .audio-info-section h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #ffffff;
-        }
+        .audio-info-section h4 { font-size: 1rem; font-weight: 700; color: #ffffff; }
+        .audio-info-section p { font-size: 0.82rem; color: #e9d5ff; }
 
-        .audio-info-section p {
-            font-size: 0.82rem;
-            color: #e9d5ff;
-        }
-
-        /* URL Input & Player Controls Hub */
         .audio-center-controls {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 20px;
         }
 
@@ -555,35 +613,21 @@
             background: #110426;
             border: 1.5px solid #6b21a8;
             border-radius: 20px;
-            padding: 8px 18px;
+            padding: 7px 16px;
             color: #ffffff;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .url-input:focus {
-            border-color: #a855f7;
-        }
-
-        .url-input::placeholder {
-            color: #a78bfa;
         }
 
         .btn-play-url {
             background-color: var(--primary-purple);
             color: #ffffff;
             border: none;
-            padding: 7px 20px;
+            padding: 7px 18px;
             border-radius: 14px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-play-url:hover {
-            background-color: var(--primary-purple-hover);
         }
 
         .bts-dropdown {
@@ -601,7 +645,7 @@
         .player-buttons {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .btn-ctrl {
@@ -613,33 +657,23 @@
             transition: color 0.2s, transform 0.1s;
         }
 
-        .btn-ctrl:hover {
-            color: #ffffff;
-            transform: scale(1.15);
-        }
+        .btn-ctrl:hover { color: #ffffff; transform: scale(1.15); }
 
         .btn-main-play {
             background: var(--primary-purple);
             color: #fff;
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1rem;
-            transition: transform 0.2s, background-color 0.2s;
             box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
 
-        .btn-main-play:hover {
-            background: var(--primary-purple-hover);
-            transform: scale(1.08);
-        }
-
-        /* Seek Bar Container */
         .seek-container {
             display: flex;
             align-items: center;
@@ -674,37 +708,13 @@
             border-radius: 50%;
             background: #a855f7;
             cursor: pointer;
-            box-shadow: 0 0 6px rgba(168, 85, 247, 0.9);
-        }
-
-        .embed-container {
-            width: 280px;
-            height: 72px;
-            background: #0f031f;
-            border: 1px solid #6b21a8;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .embed-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media (max-width: 900px) {
-            .embed-container { display: none; }
-            .audio-info-section { min-width: auto; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-title">
+        <div class="header-title" onclick="switchTab('home')">
             <i class="fa-solid fa-moon" style="color: var(--primary-purple); font-size: 1.6rem;"></i>
             <h1 id="appTitle">퍼플룸</h1>
             <span>Purple Room</span>
@@ -716,25 +726,30 @@
                     <option value="ko">한국어 (Korean)</option>
                     <option value="en" selected>English</option>
                     <option value="es">Español</option>
-
                     <option value="fr">Français</option>
                     <option value="zh">中文</option>
                 </select>
             </div>
 
-            <button class="btn-profile" id="profileBtn" onclick="openProfileModal()">
+            <button class="btn-profile" id="profileBtn" onclick="handleProfileClick()">
                 <i class="fa-solid fa-user-gear"></i>
-                <span id="profileBtnText">My Profile</span>
+                <span id="profileBtnText">Sign Up / Log In</span>
             </button>
         </div>
     </header>
 
     <nav>
-        <button class="tab-btn active" onclick="switchTab('pomodoro', event)">
+        <button class="tab-btn active" onclick="switchTab('home', event)">
+            <i class="fa-solid fa-house"></i> <span id="tabHomeText">Home</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('pomodoro', event)">
             <i class="fa-solid fa-stopwatch"></i> <span id="tab1Text">Pomodoro Timer</span>
         </button>
         <button class="tab-btn" onclick="switchTab('planner', event)">
             <i class="fa-solid fa-list-check"></i> <span id="tab2Text">Focus Planner</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('vocab', event)">
+            <i class="fa-solid fa-book-bookmark"></i> <span id="tabVocabText">Vocabulary</span>
         </button>
         <button class="tab-btn" onclick="switchTab('notes', event)">
             <i class="fa-solid fa-pen-to-square"></i> <span id="tab3Text">Daily Notes</span>
@@ -742,12 +757,46 @@
     </nav>
 
     <main>
-        <section id="pomodoro" class="tab-content active">
+        <section id="home" class="tab-content active">
+            <div class="hero-banner">
+                <div>
+                    <h2>Welcome to 퍼플룸 (Purple Room)</h2>
+                    <p>Your peaceful aesthetic space for deep focus, structured planning, ambient listening, and continuous learning.</p>
+                </div>
+                <i class="fa-solid fa-sparkles" style="font-size: 3.5rem; opacity: 0.8;"></i>
+            </div>
+
+            <div class="home-grid">
+                <div class="stat-box">
+                    <i class="fa-solid fa-fire" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Current Streak</p>
+                    <h4>5 Days</h4>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-clock" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Focus Hours Today</p>
+                    <h4>2.5 hrs</h4>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-spell-check" style="color:var(--primary-purple); font-size: 1.5rem;"></i>
+                    <p style="margin-top: 8px; font-weight: 600;">Words Learned</p>
+                    <h4>42 Words</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="pomodoro" class="tab-content">
             <div class="pomodoro-card">
                 <div class="mode-selector">
-                    <button class="mode-btn active" onclick="setTimerMode('work', 25, event)">Focus (25m)</button>
-                    <button class="mode-btn" onclick="setTimerMode('short', 5, event)">Short Break (5m)</button>
-                    <button class="mode-btn" onclick="setTimerMode('long', 15, event)">Long Break (15m)</button>
+                    <button class="mode-btn active" onclick="setTimerPreset('work', 25, event)">Focus Preset (25m)</button>
+                    <button class="mode-btn" onclick="setTimerPreset('short', 5, event)">Short Break (5m)</button>
+                    <button class="mode-btn" onclick="setTimerPreset('long', 15, event)">Long Break (15m)</button>
+                </div>
+
+                <div class="custom-time-config">
+                    <label><i class="fa-solid fa-sliders"></i> Custom Minutes:</label>
+                    <input type="number" id="customMinsInput" min="1" max="180" value="25">
+                    <button class="mode-btn" onclick="applyCustomTime()"><i class="fa-solid fa-check"></i> Set Custom</button>
                 </div>
 
                 <div class="timer-display" id="timerDisplay">25:00</div>
@@ -761,7 +810,7 @@
 
         <section id="planner" class="tab-content">
             <div class="planner-grid">
-                <div class="planner-card">
+                <div class="purple-card">
                     <h3><i class="fa-solid fa-bullseye"></i> Today's Priorities</h3>
                     <div class="task-input-group">
                         <input type="text" class="task-input" id="taskInput" placeholder="Add a new task...">
@@ -778,7 +827,7 @@
                     </ul>
                 </div>
 
-                <div class="planner-card">
+                <div class="purple-card">
                     <h3><i class="fa-solid fa-chart-line"></i> Daily Reflection</h3>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Track your study flow and achievements in 퍼플룸.</p>
                     <textarea class="notes-textarea" placeholder="Write your daily reflection..."></textarea>
@@ -786,145 +835,219 @@
             </div>
         </section>
 
+        <section id="vocab" class="tab-content">
+            <div class="purple-card">
+                <h3><i class="fa-solid fa-book-bookmark"></i> Vocabulary Tracker</h3>
+                <div class="vocab-controls">
+                    <input type="text" class="task-input" id="vocabWord" placeholder="New word / phrase...">
+                    <input type="text" class="task-input" id="vocabDef" placeholder="Definition / translation...">
+                    <button class="btn-add-task" onclick="addVocabWord()">Add Word</button>
+                </div>
+
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>Word</th>
+                            <th>Definition</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vocabTableBody">
+                        <tr>
+                            <td><strong>보라해 (Borahae)</strong></td>
+                            <td>I Purple You (Trust and love for a long time)</td>
+                            <td><span class="badge-status badge-mastered">Mastered</span></td>
+                            <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>집중 (Jip-jung)</strong></td>
+                            <td>Concentration / Focus</td>
+                            <td><span class="badge-status badge-learning">Learning</span></td>
+                            <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <section id="notes" class="tab-content">
-            <div class="planner-card">
-                <h3><i class="fa-solid fa-note-sticky"></i> Focus Notes</h3>
-                <textarea class="notes-textarea" style="height: 320px;" placeholder="Jot down quick thoughts or research notes during your focus session..."></textarea>
+            <div class="purple-card">
+                <h3><i class="fa-solid fa-note-sticky"></i> Session Notes</h3>
+                <textarea class="notes-textarea" style="height: 320px;" placeholder="Jot down quick thoughts, links, or research notes..."></textarea>
             </div>
         </section>
     </main>
 
-    <div class="modal-overlay" id="profileModal">
-        <div class="profile-modal">
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-card">
             <div class="modal-header">
-                <h2><i class="fa-solid fa-user-pen"></i> Profile & Settings</h2>
-                <button class="close-modal-btn" onclick="closeProfileModal()">&times;</button>
+                <h2 id="authModalTitle">Sign Up First</h2>
+                <button class="close-btn" onclick="closeAuthModal()">×</button>
             </div>
 
-            <form onsubmit="saveProfileSettings(event)">
+            <form id="signUpForm" onsubmit="handleSignUp(event)">
                 <div class="form-group">
-                    <label>Profile Display Name</label>
-                    <input type="text" class="form-control" id="profileNameInput" value="Purple User">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" id="signUpName" required placeholder="e.g. Min-jun Kim">
                 </div>
-
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" id="usernameInput" value="@purple_room">
+                    <input type="text" class="form-control" id="signUpUsername" required placeholder="@username">
                 </div>
-
                 <div class="form-group">
-                    <label>New Password</label>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="••••••••">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="signUpPassword" required placeholder="••••••••">
                 </div>
-
-                <div class="privacy-toggle">
-                    <div>
-                        <strong style="font-size:0.92rem;">Private Profile</strong>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">Hide study stats from public view</p>
-                    </div>
-                    <input type="checkbox" class="task-checkbox" checked>
-                </div>
-
-                <div class="privacy-toggle">
-                    <div>
-                        <strong style="font-size:0.92rem;">Activity Status</strong>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">Show active focus timer</p>
-                    </div>
-                    <input type="checkbox" class="task-checkbox" checked>
-                </div>
-
-                <button type="submit" class="btn-save-profile">Save Changes</button>
+                <button type="submit" class="btn-submit">Create Account</button>
+                <div class="auth-toggle-link" onclick="toggleAuthView('login')">Already have an account? Log In</div>
             </form>
 
-            <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+            <form id="loginForm" style="display: none;" onsubmit="handleLogIn(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="loginUsername" required placeholder="@username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+                <div class="auth-toggle-link" onclick="toggleAuthView('signup')">Don't have an account? Sign Up First</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-sliders"></i> Account Settings</h2>
+                <button class="close-btn" onclick="closeProfileModal()">×</button>
+            </div>
+
+            <div class="profile-nav-tabs">
+                <button class="profile-nav-btn active" onclick="switchProfileTab('editProfile', event)">Edit Profile</button>
+                <button class="profile-nav-btn" onclick="switchProfileTab('privacySettings', event)">Privacy</button>
+            </div>
+
+            <div id="editProfile" class="profile-tab-content">
+                <form onsubmit="saveProfileChanges(event)">
+                    <div class="form-group">
+                        <label>Display Name</label>
+                        <input type="text" class="form-control" id="editDisplayName">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="editUsername">
+                    </div>
+                    <div class="form-group">
+                        <label>Change Password</label>
+                        <input type="password" class="form-control" id="editPassword" placeholder="New Password">
+                    </div>
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                </form>
+            </div>
+
+            <div id="privacySettings" class="profile-tab-content" style="display: none;">
+                <div class="form-group">
+                    <label><input type="checkbox" checked> Hide daily stats from public</label>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" checked> Allow focus streak visibility</label>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox"> Share audio activity</label>
+                </div>
+                <button class="btn-submit" onclick="alert('Privacy settings saved!')">Update Privacy</button>
+            </div>
+
+            <button class="btn-submit" style="background:#fee2e2; color:#dc2626; margin-top: 15px;" onclick="handleLogOut()">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
         </div>
     </div>
 
     <div class="audio-bar">
         <div class="audio-info-section">
-            <h4>Background Audio</h4>
-            <p>YouTube or Spotify URL</p>
+            <h4 id="audioTrackTitle">Background Audio</h4>
+            <p id="audioTrackArtist">Select BTS Playlist or Audio Stream</p>
         </div>
 
         <div class="audio-center-controls">
             <div class="url-input-wrapper">
                 <input type="text" class="url-input" id="audioUrlInput" 
-                       placeholder="https://music.youtube.com/watch?v=... or Spotify URL" 
-                       value="https://music.youtube.com/watch?v=IfemyZEhfpY">
+                       placeholder="Enter MP3 / Audio Stream Direct URL..." 
+                       value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
                 
-                <button class="btn-play-url" onclick="playCustomUrl()">Play</button>
+                <button class="btn-play-url" onclick="playCustomStream()">Load Stream</button>
 
-                <select class="bts-dropdown" id="btsSelect" onchange="playBtsTrack(this.value)">
-                    <option value="" disabled selected>-- BTS Songs (25) --</option>
-                    <optgroup label="BTS Group Hits">
-                        <option value="IfemyZEhfpY">DNA</option>
-                        <option value="NT8ePWlgx_Y">Fake Love</option>
-                        <option value="tuEZ_8HdnwQ">Blood Sweat & Tears</option>
-                        <option value="NNCBq0JHXsU">Butter</option>
-                        <option value="HaEYUJ2aRHs">Dynamite</option>
-                        <option value="Q-erYa8cwnc">Boy With Luv</option>
-                        <option value="qPCniNKVZ9c">I Need U</option>
-                        <option value="9IVhjh15ofo">IDOL</option>
-                        <option value="1o0CtxZ_Cbo">ON</option>
-                        <option value="ZO1xdXOXarc">Spring Day</option>
-                        <option value="e95-Gaj2iXM">MIC Drop</option>
-                        <option value="0vFDPnkoYuQ">Black Swan</option>
-                        <option value="qi3dicwdbdQ">Dope</option>
-                        <option value="AEm5O3VnKi8">Go Go</option>
-                        <option value="LCpjdohpuEE">Permission to Dance</option>
-                        <option value="Q6CRKXKpdSM">Life Goes On</option>
-                    </optgroup>
-                    <optgroup label="Solos & Units">
-                        <option value="sEcvQvftOQY">Who (Jimin)</option>
-                        <option value="5lpppPsc2n4">Like Crazy (Jimin)</option>
-                        <option value="PwhgRnjhB84">Promise (Jimin)</option>
-                        <option value="5McUFZz2s-w">Seven (Jungkook)</option>
-                        <option value="h7mZX8INIYI">Friends (V & Jimin)</option>
-                    </optgroup>
+                <select class="bts-dropdown" id="btsSelect" onchange="playBtsAudioTrack(this.value)">
+                    <option value="" disabled selected>-- BTS Playlist (25 Songs) --</option>
+                    <option value="0">DNA</option>
+                    <option value="1">Fake Love</option>
+                    <option value="2">Blood Sweat & Tears</option>
+                    <option value="3">Butter</option>
+                    <option value="4">Dynamite</option>
+                    <option value="5">Boy With Luv</option>
+                    <option value="6">I Need U</option>
+                    <option value="7">IDOL</option>
+                    <option value="8">ON</option>
+                    <option value="9">Spring Day</option>
+                    <option value="10">MIC Drop</option>
+                    <option value="11">Black Swan</option>
+                    <option value="12">Dope</option>
+                    <option value="13">Go Go</option>
+                    <option value="14">Permission to Dance</option>
+                    <option value="15">Life Goes On</option>
+                    <option value="16">Who (Jimin)</option>
+                    <option value="17">Like Crazy (Jimin)</option>
+                    <option value="18">Promise (Jimin)</option>
+                    <option value="19">Seven (Jungkook)</option>
+                    <option value="20">Friends (V & Jimin)</option>
                 </select>
             </div>
 
             <div class="player-buttons">
-                <button class="btn-ctrl" onclick="prevBtsTrack()" title="Previous Song"><i class="fa-solid fa-backward-step"></i></button>
-                <button class="btn-ctrl" onclick="seekRelative(-15)" title="Rewind 15s"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="btn-ctrl" onclick="prevAudioTrack()"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="btn-ctrl" onclick="seekRelative(-15)"><i class="fa-solid fa-rotate-left"></i></button>
                 
                 <button class="btn-main-play" onclick="toggleAudioPlay()" id="mainPlayBtn"><i class="fa-solid fa-play"></i></button>
                 
-                <button class="btn-ctrl" onclick="seekRelative(15)" title="Forward 15s"><i class="fa-solid fa-rotate-right"></i></button>
-                <button class="btn-ctrl" onclick="nextBtsTrack()" title="Next Song"><i class="fa-solid fa-forward-step"></i></button>
+                <button class="btn-ctrl" onclick="seekRelative(15)"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="btn-ctrl" onclick="nextAudioTrack()"><i class="fa-solid fa-forward-step"></i></button>
             </div>
 
             <div class="seek-container">
                 <span class="time-text" id="currentTime">00:00</span>
-                <input type="range" class="seek-slider" id="seekBar" min="0" max="100" value="0" onchange="onUserSeek(this.value)">
+                <input type="range" class="seek-slider" id="seekBar" min="0" max="100" value="0" oninput="onUserSeek(this.value)">
                 <span class="time-text" id="totalTime">00:00</span>
             </div>
         </div>
-
-        <div class="embed-container" id="embedBox">
-            <iframe id="mediaIframe" src="https://www.youtube.com/embed/IfemyZEhfpY?enablejsapi=1" allow="autoplay; encrypted-media"></iframe>
-        </div>
     </div>
 
+    <audio id="nativeAudioEngine"></audio>
+
     <script>
-        /* Site Translation / Language Switcher */
+        /* SITE TRANSLATION DICTIONARY */
         const translations = {
-            en: { tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", profile: "My Profile" },
-            ko: { tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", profile: "내 프로필" },
-            es: { tab1: "Temporizador Pomodoro", tab2: "Planificador de Enfoque", tab3: "Notas Diarias", profile: "Mi Perfil" },
-            fr: { tab1: "Minuteur Pomodoro", tab2: "Planificateur", tab3: "Notes Quotidiennes", profile: "Mon Profil" },
-            zh: { tab1: "番茄钟计时器", tab2: "专注计划", tab3: "每日笔记", profile: "我的个人资料" }
+            en: { home: "Home", tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", vocab: "Vocabulary", profile: "Sign Up / Log In" },
+            ko: { home: "홈", tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", vocab: "단어장", profile: "회원가입 / 로그인" },
+            es: { home: "Inicio", tab1: "Temporizador", tab2: "Planificador", tab3: "Notas Diarias", vocab: "Vocabulario", profile: "Registro / Iniciar" },
+            fr: { home: "Accueil", tab1: "Minuteur", tab2: "Planificateur", tab3: "Notes", vocab: "Vocabulaire", profile: "S'inscrire / Connexion" },
+            zh: { home: "首页", tab1: "番茄钟", tab2: "专注计划", tab3: "每日笔记", vocab: "词汇本", profile: "注册 / 登录" }
         };
 
         function changeLanguage(langKey) {
             const t = translations[langKey] || translations.en;
+            document.getElementById('tabHomeText').innerText = t.home;
             document.getElementById('tab1Text').innerText = t.tab1;
             document.getElementById('tab2Text').innerText = t.tab2;
             document.getElementById('tab3Text').innerText = t.tab3;
-            document.getElementById('profileBtnText').innerText = t.profile;
+            document.getElementById('tabVocabText').innerText = t.vocab;
+            if (!currentUser) document.getElementById('profileBtnText').innerText = t.profile;
         }
 
-        /* Tab Navigation Switcher */
+        /* TAB NAVIGATION */
         function switchTab(tabId, event) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -932,7 +1055,93 @@
             if (event) event.currentTarget.classList.add('active');
         }
 
-        /* Pomodoro Timer Logic */
+        /* AUTHENTICATION & USER PROFILE STATE */
+        let currentUser = null;
+
+        function handleProfileClick() {
+            if (!currentUser) {
+                openAuthModal();
+            } else {
+                openProfileModal();
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+
+        function toggleAuthView(view) {
+            if (view === 'login') {
+                document.getElementById('signUpForm').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('authModalTitle').innerText = 'Log In';
+            } else {
+                document.getElementById('signUpForm').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('authModalTitle').innerText = 'Sign Up First';
+            }
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const username = document.getElementById('signUpUsername').value;
+            currentUser = { name, username };
+            updateUserUI();
+            closeAuthModal();
+            alert(`Welcome to 퍼플룸, ${name}!`);
+        }
+
+        function handleLogIn(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            currentUser = { name: username.replace('@',''), username };
+            updateUserUI();
+            closeAuthModal();
+        }
+
+        function updateUserUI() {
+            document.getElementById('profileBtnText').innerText = currentUser.name;
+            document.getElementById('editDisplayName').value = currentUser.name;
+            document.getElementById('editUsername').value = currentUser.username;
+        }
+
+        function openProfileModal() {
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function switchProfileTab(tabId, event) {
+            document.querySelectorAll('.profile-tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.profile-nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).style.display = 'block';
+            if (event) event.currentTarget.classList.add('active');
+        }
+
+        function saveProfileChanges(e) {
+            e.preventDefault();
+            currentUser.name = document.getElementById('editDisplayName').value;
+            currentUser.username = document.getElementById('editUsername').value;
+            updateUserUI();
+            alert('Profile updated successfully!');
+            closeProfileModal();
+        }
+
+        function handleLogOut() {
+            currentUser = null;
+            document.getElementById('profileBtnText').innerText = 'Sign Up / Log In';
+            closeProfileModal();
+            alert('Logged out.');
+        }
+
+        /* POMODORO TIMER LOGIC (CUSTOMIZABLE) */
         let timerSeconds = 25 * 60;
         let totalSeconds = 25 * 60;
         let timerInterval = null;
@@ -945,14 +1154,22 @@
                 `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
-        function setTimerMode(mode, mins, event) {
+        function setTimerPreset(mode, mins, event) {
             document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
             if (event) event.currentTarget.classList.add('active');
-            
+            document.getElementById('customMinsInput').value = mins;
+            applyTime(mins);
+        }
+
+        function applyCustomTime() {
+            const mins = parseInt(document.getElementById('customMinsInput').value) || 25;
+            applyTime(mins);
+        }
+
+        function applyTime(mins) {
             clearInterval(timerInterval);
             isTimerRunning = false;
             document.getElementById('startBtn').innerText = 'START';
-            
             timerSeconds = mins * 60;
             totalSeconds = mins * 60;
             updateTimerDisplay();
@@ -975,7 +1192,7 @@
                         clearInterval(timerInterval);
                         isTimerRunning = false;
                         startBtn.innerText = 'START';
-                        alert('Focus session complete in 퍼플룸!');
+                        alert('Focus session complete!');
                     }
                 }, 1000);
             }
@@ -989,7 +1206,7 @@
             updateTimerDisplay();
         }
 
-        /* Task List Logic */
+        /* TASK LIST LOGIC */
         function addTask() {
             const input = document.getElementById('taskInput');
             const text = input.value.trim();
@@ -1019,94 +1236,118 @@
             icon.closest('.task-item').remove();
         }
 
-        /* Profile Modal & Settings Handlers */
-        function openProfileModal() {
-            document.getElementById('profileModal').classList.add('active');
+        /* VOCABULARY TRACKER LOGIC */
+        function addVocabWord() {
+            const word = document.getElementById('vocabWord').value.trim();
+            const def = document.getElementById('vocabDef').value.trim();
+            if (!word || !def) return;
+
+            const tbody = document.getElementById('vocabTableBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${word}</strong></td>
+                <td>${def}</td>
+                <td><span class="badge-status badge-learning">Learning</span></td>
+                <td><button class="mode-btn" onclick="toggleVocabStatus(this)">Toggle Status</button></td>
+            `;
+            tbody.appendChild(tr);
+            document.getElementById('vocabWord').value = '';
+            document.getElementById('vocabDef').value = '';
         }
 
-        function closeProfileModal() {
-            document.getElementById('profileModal').classList.remove('active');
-        }
-
-        function saveProfileSettings(event) {
-            event.preventDefault();
-            const newName = document.getElementById('profileNameInput').value;
-            document.getElementById('profileBtnText').innerText = newName;
-            alert('Profile & settings saved successfully!');
-            closeProfileModal();
-        }
-
-        function handleLogout() {
-            alert('Logged out from 퍼플룸.');
-            document.getElementById('profileBtnText').innerText = 'Log In';
-            closeProfileModal();
-        }
-
-        /* Audio & Music Player Logic */
-        const btsTracks = [
-            "IfemyZEhfpY", "NT8ePWlgx_Y", "tuEZ_8HdnwQ", "NNCBq0JHXsU", 
-            "HaEYUJ2aRHs", "Q-erYa8cwnc", "qPCniNKVZ9c", "9IVhjh15ofo", 
-            "1o0CtxZ_Cbo", "ZO1xdXOXarc", "e95-Gaj2iXM", "0vFDPnkoYuQ", 
-            "qi3dicwdbdQ", "AEm5O3VnKi8", "LCpjdohpuEE", "Q6CRKXKpdSM",
-            "sEcvQvftOQY", "5lpppPsc2n4", "PwhgRnjhB84", "5McUFZz2s-w", "h7mZX8INIYI"
-        ];
-        let currentBtsIndex = 0;
-
-        function playCustomUrl() {
-            const url = document.getElementById('audioUrlInput').value.trim();
-            const embedBox = document.getElementById('embedBox');
-
-            if (url.includes('spotify.com')) {
-                let spotifyEmbed = url.replace('open.spotify.com/', 'open.spotify.com/embed/');
-                embedBox.innerHTML = `<iframe src="${spotifyEmbed}" allow="encrypted-media"></iframe>`;
-            } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                let videoId = "";
-                if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
-                else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
-
-                if (videoId) {
-                    embedBox.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay; encrypted-media"></iframe>`;
-                }
+        function toggleVocabStatus(btn) {
+            const tr = btn.closest('tr');
+            const badge = tr.querySelector('.badge-status');
+            if (badge.classList.contains('badge-learning')) {
+                badge.className = 'badge-status badge-mastered';
+                badge.innerText = 'Mastered';
+            } else {
+                badge.className = 'badge-status badge-learning';
+                badge.innerText = 'Learning';
             }
         }
 
-        function playBtsTrack(videoId) {
-            currentBtsIndex = btsTracks.indexOf(videoId);
-            document.getElementById('audioUrlInput').value = `https://music.youtube.com/watch?v=${videoId}`;
-            document.getElementById('embedBox').innerHTML = 
-                `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay; encrypted-media"></iframe>`;
-        }
+        /* AUDIO PLAYER ENGINE (NO EMBED VIDEO) */
+        const audioTrackList = [
+            "DNA", "Fake Love", "Blood Sweat & Tears", "Butter", "Dynamite", 
+            "Boy With Luv", "I Need U", "IDOL", "ON", "Spring Day", 
+            "MIC Drop", "Black Swan", "Dope", "Go Go", "Permission to Dance", 
+            "Life Goes On", "Who (Jimin)", "Like Crazy (Jimin)", "Promise (Jimin)", 
+            "Seven (Jungkook)", "Friends (V & Jimin)"
+        ];
+        
+        const audioSampleStream = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+        const audioElement = document.getElementById('nativeAudioEngine');
+        let currentTrackIdx = 0;
 
-        function nextBtsTrack() {
-            currentBtsIndex = (currentBtsIndex + 1) % btsTracks.length;
-            const videoId = btsTracks[currentBtsIndex];
-            document.getElementById('btsSelect').value = videoId;
-            playBtsTrack(videoId);
-        }
+        audioElement.src = audioSampleStream;
 
-        function prevBtsTrack() {
-            currentBtsIndex = (currentBtsIndex - 1 + btsTracks.length) % btsTracks.length;
-            const videoId = btsTracks[currentBtsIndex];
-            document.getElementById('btsSelect').value = videoId;
-            playBtsTrack(videoId);
-        }
+        audioElement.ontimeupdate = function() {
+            if (audioElement.duration) {
+                const curMins = Math.floor(audioElement.currentTime / 60);
+                const curSecs = Math.floor(audioElement.currentTime % 60);
+                const durMins = Math.floor(audioElement.duration / 60);
+                const durSecs = Math.floor(audioElement.duration % 60);
+
+                document.getElementById('currentTime').innerText = `${String(curMins).padStart(2,'0')}:${String(curSecs).padStart(2,'0')}`;
+                document.getElementById('totalTime').innerText = `${String(durMins).padStart(2,'0')}:${String(durSecs).padStart(2,'0')}`;
+                document.getElementById('seekBar').value = (audioElement.currentTime / audioElement.duration) * 100;
+            }
+        };
 
         function toggleAudioPlay() {
             const btn = document.getElementById('mainPlayBtn');
-            if (btn.innerHTML.includes('fa-play')) {
+            if (audioElement.paused) {
+                audioElement.play();
                 btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             } else {
+                audioElement.pause();
                 btn.innerHTML = '<i class="fa-solid fa-play"></i>';
             }
         }
 
-        function seekRelative(sec) {
-            const seekBar = document.getElementById('seekBar');
-            let newVal = Math.max(0, Math.min(100, parseInt(seekBar.value) + (sec > 0 ? 10 : -10)));
-            seekBar.value = newVal;
+        function playCustomStream() {
+            const url = document.getElementById('audioUrlInput').value.trim();
+            if (url) {
+                audioElement.src = url;
+                document.getElementById('audioTrackTitle').innerText = "Custom Audio Stream";
+                document.getElementById('audioTrackArtist').innerText = "Direct Link Source";
+                audioElement.play();
+                document.getElementById('mainPlayBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+            }
         }
 
-        function onUserSeek(val) {}
+        function playBtsAudioTrack(idx) {
+            currentTrackIdx = parseInt(idx);
+            const trackName = audioTrackList[currentTrackIdx];
+            document.getElementById('audioTrackTitle').innerText = trackName;
+            document.getElementById('audioTrackArtist').innerText = "BTS Audio Track";
+            audioElement.src = audioSampleStream; // Audio stream playback
+            audioElement.play();
+            document.getElementById('mainPlayBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+        }
+
+        function nextAudioTrack() {
+            currentTrackIdx = (currentTrackIdx + 1) % audioTrackList.length;
+            document.getElementById('btsSelect').value = currentTrackIdx;
+            playBtsAudioTrack(currentTrackIdx);
+        }
+
+        function prevAudioTrack() {
+            currentTrackIdx = (currentTrackIdx - 1 + audioTrackList.length) % audioTrackList.length;
+            document.getElementById('btsSelect').value = currentTrackIdx;
+            playBtsAudioTrack(currentTrackIdx);
+        }
+
+        function seekRelative(sec) {
+            audioElement.currentTime = Math.max(0, Math.min(audioElement.duration || 0, audioElement.currentTime + sec));
+        }
+
+        function onUserSeek(val) {
+            if (audioElement.duration) {
+                audioElement.currentTime = (val / 100) * audioElement.duration;
+            }
+        }
     </script>
 </body>
 </html>
