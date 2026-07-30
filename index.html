@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>퍼플룸 (Purple Room) - Focus & Study Dashboard</title>
+    <title>퍼플룸 Purple Room - Focus & Study Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -70,6 +70,7 @@
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+            position: relative;
         }
 
         /* Dropdown Styling */
@@ -128,6 +129,51 @@
         .btn-profile:hover {
             background-color: var(--primary-purple-hover);
             transform: translateY(-1px);
+        }
+
+        /* User Profile Dropdown Menu */
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 110%;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(46, 16, 101, 0.15);
+            width: 210px;
+            z-index: 1500;
+            overflow: hidden;
+            flex-direction: column;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .profile-dropdown.show {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--purple-light);
+            color: var(--primary-purple);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 4px 0;
         }
 
         /* Navigation Tabs */
@@ -620,10 +666,26 @@
                 </select>
             </div>
 
-            <button class="btn-profile" id="profileBtn" onclick="handleProfileClick()">
-                <i class="fa-solid fa-user-gear"></i>
-                <span id="profileBtnText">Sign Up / Log In</span>
-            </button>
+            <div style="position: relative;">
+                <button class="btn-profile" id="profileBtn" onclick="handleProfileClick(event)">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span id="profileBtnText">Sign Up / Log In</span>
+                    <i class="fa-solid fa-chevron-down" id="profileChevron" style="display: none; font-size: 0.75rem;"></i>
+                </button>
+
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item" onclick="openProfileSettingsModal()">
+                        <i class="fa-solid fa-user-pen" style="color: var(--primary-purple);"></i> Edit Profile
+                    </div>
+                    <div class="dropdown-item" onclick="openProfileSettingsModal()">
+                        <i class="fa-solid fa-sliders" style="color: var(--primary-purple);"></i> Settings & Timezone
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" style="color: #dc2626;" onclick="handleSignOut()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -841,6 +903,42 @@
                 <div class="auth-links-row">
                     <span class="auth-toggle-link" onclick="toggleAuthView('login')">Back to Log In</span>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="profileSettingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Account & Profile Settings</h2>
+                <button class="close-btn" onclick="closeProfileSettingsModal()">×</button>
+            </div>
+            <form onsubmit="handleSaveProfileSettings(event)">
+                <div class="form-group">
+                    <label>Display Name</label>
+                    <input type="text" class="form-control" id="editDisplayName" required>
+                </div>
+                <div class="form-group">
+                    <label>Username (Read-Only)</label>
+                    <input type="text" class="form-control" id="editUsername" disabled style="opacity: 0.7;">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Timezone</label>
+                    <select class="form-control" id="editTimezone">
+                        <option value="America/Los_Angeles">Pacific Time (PDT/PST)</option>
+                        <option value="America/New_York">Eastern Time (EDT/EST)</option>
+                        <option value="America/Chicago">Central Time (CDT/CST)</option>
+                        <option value="America/Denver">Mountain Time (MDT/MST)</option>
+                        <option value="UTC">UTC / GMT</option>
+                        <option value="Asia/Seoul">Korea Standard Time (KST)</option>
+                        <option value="Europe/London">London (BST/GMT)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>New Password (leave blank to keep current)</label>
+                    <input type="password" class="form-control" id="editPassword" placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-submit">Save Settings</button>
             </form>
         </div>
     </div>
@@ -1079,7 +1177,7 @@
         function getFormattedDateInTimezone(tz) {
             const now = new Date();
             const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' });
-            return formatter.format(now); // Formats cleanly as "YYYY-MM-DD"
+            return formatter.format(now);
         }
 
         function handleTimezoneChange(newTz) {
@@ -1095,27 +1193,22 @@
             const todayStr = getFormattedDateInTimezone(currentTimeZone);
             
             if (!userData.lastLogDate) {
-                // First login ever
                 userData.streakDays = 1;
                 userData.lastLogDate = todayStr;
             } else if (userData.lastLogDate === todayStr) {
-                // Already logged in today; keep streak unchanged
+                // Same day, streak unchanged
             } else {
-                // Calculate calendar day difference across midnight in target timezone
                 const lastDateObj = new Date(userData.lastLogDate + "T00:00:00");
                 const todayObj = new Date(todayStr + "T00:00:00");
                 const diffTime = Math.abs(todayObj - lastDateObj);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
                 if (diffDays === 1) {
-                    // Logged in on consecutive calendar day -> increment streak
                     userData.streakDays += 1;
                 } else if (diffDays > 1) {
-                    // Skipped a day -> reset streak to 1
                     userData.streakDays = 1;
                 }
                 
-                // Reset daily focus tracker for the new day
                 userData.focusMinutesToday = 0;
                 userData.lastLogDate = todayStr;
             }
@@ -1212,8 +1305,76 @@
             }
         }
 
-        /* AUTHENTICATION & SECURITY QUESTIONS */
-        function handleProfileClick() { if (!currentUser) openAuthModal(); }
+        /* AUTHENTICATION & PROFILE DROPDOWN */
+        function handleProfileClick(e) {
+            e.stopPropagation();
+            if (!currentUser) {
+                openAuthModal();
+            } else {
+                document.getElementById('profileDropdown').classList.toggle('show');
+            }
+        }
+
+        // Close dropdown when clicking anywhere outside
+        window.addEventListener('click', () => {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        function handleSignOut() {
+            saveUserData();
+            currentUser = null;
+            document.getElementById('profileBtnText').innerText = "Sign Up / Log In";
+            document.getElementById('profileChevron').style.display = "none";
+            document.getElementById('welcomeHeading').innerText = "Welcome to 퍼플룸 (Purple Room)";
+            
+            // Reset local display states
+            userData = { streakDays: 0, lastLogDate: null, selectedTimezone: currentTimeZone, focusMinutesToday: 0, tasks: [], vocabList: [], dailyReflection: "", sessionNotes: "" };
+            renderUserData();
+            alert("You have signed out successfully.");
+        }
+
+        function openProfileSettingsModal() {
+            document.getElementById('profileDropdown').classList.remove('show');
+            if (!currentUser) return;
+            document.getElementById('editDisplayName').value = currentUser.name;
+            document.getElementById('editUsername').value = currentUser.username;
+            document.getElementById('editTimezone').value = currentTimeZone;
+            document.getElementById('editPassword').value = '';
+            document.getElementById('profileSettingsModal').classList.add('active');
+        }
+
+        function closeProfileSettingsModal() {
+            document.getElementById('profileSettingsModal').classList.remove('active');
+        }
+
+        function handleSaveProfileSettings(e) {
+            e.preventDefault();
+            const newName = document.getElementById('editDisplayName').value.trim();
+            const newTz = document.getElementById('editTimezone').value;
+            const newPw = document.getElementById('editPassword').value.trim();
+
+            if (!newName) return;
+
+            currentUser.name = newName;
+            
+            // Update creds in localStorage
+            const creds = JSON.parse(localStorage.getItem(`purple_creds_${currentUser.username}`));
+            creds.name = newName;
+            if (newPw) creds.password = newPw;
+            localStorage.setItem(`purple_creds_${currentUser.username}`, JSON.stringify(creds));
+
+            // Update user timezone
+            document.getElementById('timezoneSelect').value = newTz;
+            handleTimezoneChange(newTz);
+
+            updateUserHeader();
+            closeProfileSettingsModal();
+            alert("Profile settings updated successfully!");
+        }
+
         function openAuthModal() { document.getElementById('authModal').classList.add('active'); }
         function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
@@ -1317,6 +1478,7 @@
 
         function updateUserHeader() {
             document.getElementById('profileBtnText').innerText = currentUser.name;
+            document.getElementById('profileChevron').style.display = "inline-block";
             document.getElementById('welcomeHeading').innerText = `Welcome back, ${currentUser.name}!`;
         }
 
