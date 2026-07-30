@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼플룸 (Purple Room) - Focus & Planner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f5f0bb; /* Soft Lilac Tint Background */
+            --bg-main: #f3e8ff; 
+            --bg-card: #ffffff;
+            --text-main: #2e1065;
+            --text-muted: #6b21a8;
+            --primary-purple: #7e22ce;
+            --primary-purple-hover: #6b21a8;
+            --purple-light: #faf5ff;
+            --purple-pill: #e9d5ff;
+            --border-color: #d8b4fe;
+            --audio-bar-bg: #1e0a38;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-bottom: 130px; /* Room for fixed bottom audio bar */
+            min-height: 100vh;
+        }
+
+        /* Top Header Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 1.7rem;
+            color: var(--primary-purple);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title span {
+            font-size: 0.95rem;
+            color: #9333ea;
+            font-weight: 600;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Language Switcher Dropdown */
+        .lang-select-wrapper {
+            position: relative;
+        }
+
+        .lang-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--purple-pill);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            padding: 10px 38px 10px 22px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .lang-select:hover {
+            border-color: var(--primary-purple);
+        }
+
+        .lang-select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            pointer-events: none;
+        }
+
+        /* Profile & Log In Button */
+        .btn-profile {
+            background-color: var(--primary-purple);
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-profile:hover {
+            background-color: var(--primary-purple-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Navigation Tabs */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 10px;
+        }
+
+        .tab-btn {
+            background: var(--purple-pill);
+            border: none;
+            color: var(--text-main);
+            padding: 10px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background-color: #d8b4fe;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-purple);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        /* Container Layout */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pomodoro Timer Section */
+        .pomodoro-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 550px;
+            margin: 10px auto 30px;
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .mode-btn {
+            background: var(--purple-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 18px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: var(--primary-purple);
+            color: #fff;
+            border-color: var(--primary-purple);
+        }
+
+        .timer-display {
+            font-size: 5.5rem;
+            font-weight: 800;
+            color: var(--primary-purple);
+            letter-spacing: 2px;
+            margin: 15px 0 25px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-timer {
+            background-color: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.3);
+        }
+
+        .btn-timer:hover {
+            background-color: var(--primary-purple-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-timer-secondary {
+            background-color: var(--purple-pill);
+            color: var(--text-main);
+            border: none;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-timer-secondary:hover {
+            background-color: #d8b4fe;
+        }
+
+        /* Planner & Task Section */
+        .planner-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .planner-grid { grid-template-columns: 1fr; }
+        }
+
+        .planner-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(126, 34, 206, 0.06);
+            border: 1px solid var(--border-color);
+        }
+
+        .planner-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-purple);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            outline: none;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .task-input:focus {
+            border-color: var(--primary-purple);
+        }
+
+        .btn-add-task {
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-add-task:hover {
+            background: var(--primary-purple-hover);
+        }
+
+        .task-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--purple-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .task-item.completed span {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .task-checkbox {
+            accent-color: var(--primary-purple);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            padding: 14px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            resize: vertical;
+        }
+
+        /* PROFILE MODAL SYSTEM */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(30, 10, 56, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .profile-modal {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 480px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(46, 16, 101, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.4rem;
+            color: var(--primary-purple);
+        }
+
+        .close-modal-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--purple-light);
+            outline: none;
+            font-size: 0.92rem;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-purple);
+        }
+
+        .privacy-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px dashed var(--border-color);
+            margin-top: 10px;
+        }
+
+        .btn-save-profile {
+            width: 100%;
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        .btn-save-profile:hover {
+            background: var(--primary-purple-hover);
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #fca5a5;
+            color: #991b1b;
+        }
+
+        /* BACKGROUND AUDIO & MUSIC PLAYER BAR */
+        .audio-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
+            background-color: var(--audio-bar-bg);
+            border-top: 2px solid #4c1d95;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            z-index: 1000;
+            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+
+        .audio-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 180px;
+        }
+
+        .audio-info-section h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .audio-info-section p {
+            font-size: 0.82rem;
+            color: #e9d5ff;
+        }
+
+        /* URL Input & Player Controls Hub */
+        .audio-center-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            max-width: 650px;
+            margin: 0 20px;
+        }
+
+        .url-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .url-input {
+            flex: 1;
+            background: #110426;
+            border: 1.5px solid #6b21a8;
+            border-radius: 20px;
+            padding: 8px 18px;
+            color: #ffffff;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .url-input:focus {
+            border-color: #a855f7;
+        }
+
+        .url-input::placeholder {
+            color: #a78bfa;
+        }
+
+        .btn-play-url {
+            background-color: var(--primary-purple);
+            color: #ffffff;
+            border: none;
+            padding: 7px 20px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-play-url:hover {
+            background-color: var(--primary-purple-hover);
+        }
+
+        .bts-dropdown {
+            background-color: #110426;
+            color: #f3e8ff;
+            border: 1px solid #6b21a8;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            outline: none;
+            cursor: pointer;
+            max-width: 220px;
+        }
+
+        .player-buttons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-ctrl {
+            background: transparent;
+            border: none;
+            color: #e9d5ff;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .btn-ctrl:hover {
+            color: #ffffff;
+            transform: scale(1.15);
+        }
+
+        .btn-main-play {
+            background: var(--primary-purple);
+            color: #fff;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .btn-main-play:hover {
+            background: var(--primary-purple-hover);
+            transform: scale(1.08);
+        }
+
+        /* Seek Bar Container */
+        .seek-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .time-text {
+            font-size: 0.75rem;
+            color: #e9d5ff;
+            font-variant-numeric: tabular-nums;
+            width: 38px;
+            text-align: center;
+        }
+
+        .seek-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            border-radius: 5px;
+            background: #3b0764;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .seek-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+            box-shadow: 0 0 6px rgba(168, 85, 247, 0.9);
+        }
+
+        .embed-container {
+            width: 280px;
+            height: 72px;
+            background: #0f031f;
+            border: 1px solid #6b21a8;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .embed-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 900px) {
+            .embed-container { display: none; }
+            .audio-info-section { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <i class="fa-solid fa-moon" style="color: var(--primary-purple); font-size: 1.6rem;"></i>
+            <h1 id="appTitle">퍼플룸</h1>
+            <span>Purple Room</span>
+        </div>
+
+        <div class="header-controls">
+            <div class="lang-select-wrapper">
+                <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="ko">한국어 (Korean)</option>
+                    <option value="en" selected>English</option>
+                    <option value="es">Español</option>
+
+                    <option value="fr">Français</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+
+            <button class="btn-profile" id="profileBtn" onclick="openProfileModal()">
+                <i class="fa-solid fa-user-gear"></i>
+                <span id="profileBtnText">My Profile</span>
+            </button>
+        </div>
+    </header>
+
+    <nav>
+        <button class="tab-btn active" onclick="switchTab('pomodoro', event)">
+            <i class="fa-solid fa-stopwatch"></i> <span id="tab1Text">Pomodoro Timer</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('planner', event)">
+            <i class="fa-solid fa-list-check"></i> <span id="tab2Text">Focus Planner</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('notes', event)">
+            <i class="fa-solid fa-pen-to-square"></i> <span id="tab3Text">Daily Notes</span>
+        </button>
+    </nav>
+
+    <main>
+        <section id="pomodoro" class="tab-content active">
+            <div class="pomodoro-card">
+                <div class="mode-selector">
+                    <button class="mode-btn active" onclick="setTimerMode('work', 25, event)">Focus (25m)</button>
+                    <button class="mode-btn" onclick="setTimerMode('short', 5, event)">Short Break (5m)</button>
+                    <button class="mode-btn" onclick="setTimerMode('long', 15, event)">Long Break (15m)</button>
+                </div>
+
+                <div class="timer-display" id="timerDisplay">25:00</div>
+
+                <div class="timer-controls">
+                    <button class="btn-timer" id="startBtn" onclick="toggleTimer()">START</button>
+                    <button class="btn-timer-secondary" onclick="resetTimer()"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="planner" class="tab-content">
+            <div class="planner-grid">
+                <div class="planner-card">
+                    <h3><i class="fa-solid fa-bullseye"></i> Today's Priorities</h3>
+                    <div class="task-input-group">
+                        <input type="text" class="task-input" id="taskInput" placeholder="Add a new task...">
+                        <button class="btn-add-task" onclick="addTask()">Add</button>
+                    </div>
+                    <ul class="task-list" id="taskList">
+                        <li class="task-item">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" class="task-checkbox" onchange="toggleTask(this)">
+                                <span>Complete 4 Purple Room sessions</span>
+                            </div>
+                            <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(this)"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="planner-card">
+                    <h3><i class="fa-solid fa-chart-line"></i> Daily Reflection</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Track your study flow and achievements in 퍼플룸.</p>
+                    <textarea class="notes-textarea" placeholder="Write your daily reflection..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes" class="tab-content">
+            <div class="planner-card">
+                <h3><i class="fa-solid fa-note-sticky"></i> Focus Notes</h3>
+                <textarea class="notes-textarea" style="height: 320px;" placeholder="Jot down quick thoughts or research notes during your focus session..."></textarea>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="profileModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-user-pen"></i> Profile & Settings</h2>
+                <button class="close-modal-btn" onclick="closeProfileModal()">&times;</button>
+            </div>
+
+            <form onsubmit="saveProfileSettings(event)">
+                <div class="form-group">
+                    <label>Profile Display Name</label>
+                    <input type="text" class="form-control" id="profileNameInput" value="Purple User">
+                </div>
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="usernameInput" value="@purple_room">
+                </div>
+
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" class="form-control" id="passwordInput" placeholder="••••••••">
+                </div>
+
+                <div class="privacy-toggle">
+                    <div>
+                        <strong style="font-size:0.92rem;">Private Profile</strong>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Hide study stats from public view</p>
+                    </div>
+                    <input type="checkbox" class="task-checkbox" checked>
+                </div>
+
+                <div class="privacy-toggle">
+                    <div>
+                        <strong style="font-size:0.92rem;">Activity Status</strong>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Show active focus timer</p>
+                    </div>
+                    <input type="checkbox" class="task-checkbox" checked>
+                </div>
+
+                <button type="submit" class="btn-save-profile">Save Changes</button>
+            </form>
+
+            <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+        </div>
+    </div>
+
+    <div class="audio-bar">
+        <div class="audio-info-section">
+            <h4>Background Audio</h4>
+            <p>YouTube or Spotify URL</p>
+        </div>
+
+        <div class="audio-center-controls">
+            <div class="url-input-wrapper">
+                <input type="text" class="url-input" id="audioUrlInput" 
+                       placeholder="https://music.youtube.com/watch?v=... or Spotify URL" 
+                       value="https://music.youtube.com/watch?v=IfemyZEhfpY">
+                
+                <button class="btn-play-url" onclick="playCustomUrl()">Play</button>
+
+                <select class="bts-dropdown" id="btsSelect" onchange="playBtsTrack(this.value)">
+                    <option value="" disabled selected>-- BTS Songs (25) --</option>
+                    <optgroup label="BTS Group Hits">
+                        <option value="IfemyZEhfpY">DNA</option>
+                        <option value="NT8ePWlgx_Y">Fake Love</option>
+                        <option value="tuEZ_8HdnwQ">Blood Sweat & Tears</option>
+                        <option value="NNCBq0JHXsU">Butter</option>
+                        <option value="HaEYUJ2aRHs">Dynamite</option>
+                        <option value="Q-erYa8cwnc">Boy With Luv</option>
+                        <option value="qPCniNKVZ9c">I Need U</option>
+                        <option value="9IVhjh15ofo">IDOL</option>
+                        <option value="1o0CtxZ_Cbo">ON</option>
+                        <option value="ZO1xdXOXarc">Spring Day</option>
+                        <option value="e95-Gaj2iXM">MIC Drop</option>
+                        <option value="0vFDPnkoYuQ">Black Swan</option>
+                        <option value="qi3dicwdbdQ">Dope</option>
+                        <option value="AEm5O3VnKi8">Go Go</option>
+                        <option value="LCpjdohpuEE">Permission to Dance</option>
+                        <option value="Q6CRKXKpdSM">Life Goes On</option>
+                    </optgroup>
+                    <optgroup label="Solos & Units">
+                        <option value="sEcvQvftOQY">Who (Jimin)</option>
+                        <option value="5lpppPsc2n4">Like Crazy (Jimin)</option>
+                        <option value="PwhgRnjhB84">Promise (Jimin)</option>
+                        <option value="5McUFZz2s-w">Seven (Jungkook)</option>
+                        <option value="h7mZX8INIYI">Friends (V & Jimin)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="player-buttons">
+                <button class="btn-ctrl" onclick="prevBtsTrack()" title="Previous Song"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="btn-ctrl" onclick="seekRelative(-15)" title="Rewind 15s"><i class="fa-solid fa-rotate-left"></i></button>
+                
+                <button class="btn-main-play" onclick="toggleAudioPlay()" id="mainPlayBtn"><i class="fa-solid fa-play"></i></button>
+                
+                <button class="btn-ctrl" onclick="seekRelative(15)" title="Forward 15s"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="btn-ctrl" onclick="nextBtsTrack()" title="Next Song"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+
+            <div class="seek-container">
+                <span class="time-text" id="currentTime">00:00</span>
+                <input type="range" class="seek-slider" id="seekBar" min="0" max="100" value="0" onchange="onUserSeek(this.value)">
+                <span class="time-text" id="totalTime">00:00</span>
+            </div>
+        </div>
+
+        <div class="embed-container" id="embedBox">
+            <iframe id="mediaIframe" src="https://www.youtube.com/embed/IfemyZEhfpY?enablejsapi=1" allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
+
+    <script>
+        /* Site Translation / Language Switcher */
+        const translations = {
+            en: { tab1: "Pomodoro Timer", tab2: "Focus Planner", tab3: "Daily Notes", profile: "My Profile" },
+            ko: { tab1: "뽀모도로 타이머", tab2: "포커스 플래너", tab3: "데일리 노트", profile: "내 프로필" },
+            es: { tab1: "Temporizador Pomodoro", tab2: "Planificador de Enfoque", tab3: "Notas Diarias", profile: "Mi Perfil" },
+            fr: { tab1: "Minuteur Pomodoro", tab2: "Planificateur", tab3: "Notes Quotidiennes", profile: "Mon Profil" },
+            zh: { tab1: "番茄钟计时器", tab2: "专注计划", tab3: "每日笔记", profile: "我的个人资料" }
+        };
+
+        function changeLanguage(langKey) {
+            const t = translations[langKey] || translations.en;
+            document.getElementById('tab1Text').innerText = t.tab1;
+            document.getElementById('tab2Text').innerText = t.tab2;
+            document.getElementById('tab3Text').innerText = t.tab3;
+            document.getElementById('profileBtnText').innerText = t.profile;
+        }
+
+        /* Tab Navigation Switcher */
+        function switchTab(tabId, event) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (event) event.currentTarget.classList.add('active');
+        }
+
+        /* Pomodoro Timer Logic */
+        let timerSeconds = 25 * 60;
+        let totalSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function setTimerMode(mode, mins, event) {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            if (event) event.currentTarget.classList.add('active');
+            
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('startBtn').innerText = 'START';
+            
+            timerSeconds = mins * 60;
+            totalSeconds = mins * 60;
+            updateTimerDisplay();
+        }
+
+        function toggleTimer() {
+            const startBtn = document.getElementById('startBtn');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                startBtn.innerText = 'START';
+            } else {
+                isTimerRunning = true;
+                startBtn.innerText = 'PAUSE';
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        startBtn.innerText = 'START';
+                        alert('Focus session complete in 퍼플룸!');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('startBtn').innerText = 'START';
+            timerSeconds = totalSeconds;
+            updateTimerDisplay();
+        }
+
+        /* Task List Logic */
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const ul = document.getElementById('taskList');
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" class="task-checkbox" onchange="toggleTask(this)">
+                    <span>${text}</span>
+                </div>
+                <i class="fa-solid fa-trash" style="color:var(--text-muted); cursor:pointer;" onclick="deleteTask(this)"></i>
+            `;
+            ul.appendChild(li);
+            input.value = '';
+        }
+
+        function toggleTask(checkbox) {
+            const item = checkbox.closest('.task-item');
+            if (checkbox.checked) item.classList.add('completed');
+            else item.classList.remove('completed');
+        }
+
+        function deleteTask(icon) {
+            icon.closest('.task-item').remove();
+        }
+
+        /* Profile Modal & Settings Handlers */
+        function openProfileModal() {
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function saveProfileSettings(event) {
+            event.preventDefault();
+            const newName = document.getElementById('profileNameInput').value;
+            document.getElementById('profileBtnText').innerText = newName;
+            alert('Profile & settings saved successfully!');
+            closeProfileModal();
+        }
+
+        function handleLogout() {
+            alert('Logged out from 퍼플룸.');
+            document.getElementById('profileBtnText').innerText = 'Log In';
+            closeProfileModal();
+        }
+
+        /* Audio & Music Player Logic */
+        const btsTracks = [
+            "IfemyZEhfpY", "NT8ePWlgx_Y", "tuEZ_8HdnwQ", "NNCBq0JHXsU", 
+            "HaEYUJ2aRHs", "Q-erYa8cwnc", "qPCniNKVZ9c", "9IVhjh15ofo", 
+            "1o0CtxZ_Cbo", "ZO1xdXOXarc", "e95-Gaj2iXM", "0vFDPnkoYuQ", 
+            "qi3dicwdbdQ", "AEm5O3VnKi8", "LCpjdohpuEE", "Q6CRKXKpdSM",
+            "sEcvQvftOQY", "5lpppPsc2n4", "PwhgRnjhB84", "5McUFZz2s-w", "h7mZX8INIYI"
+        ];
+        let currentBtsIndex = 0;
+
+        function playCustomUrl() {
+            const url = document.getElementById('audioUrlInput').value.trim();
+            const embedBox = document.getElementById('embedBox');
+
+            if (url.includes('spotify.com')) {
+                let spotifyEmbed = url.replace('open.spotify.com/', 'open.spotify.com/embed/');
+                embedBox.innerHTML = `<iframe src="${spotifyEmbed}" allow="encrypted-media"></iframe>`;
+            } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = "";
+                if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
+                else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
+
+                if (videoId) {
+                    embedBox.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay; encrypted-media"></iframe>`;
+                }
+            }
+        }
+
+        function playBtsTrack(videoId) {
+            currentBtsIndex = btsTracks.indexOf(videoId);
+            document.getElementById('audioUrlInput').value = `https://music.youtube.com/watch?v=${videoId}`;
+            document.getElementById('embedBox').innerHTML = 
+                `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay; encrypted-media"></iframe>`;
+        }
+
+        function nextBtsTrack() {
+            currentBtsIndex = (currentBtsIndex + 1) % btsTracks.length;
+            const videoId = btsTracks[currentBtsIndex];
+            document.getElementById('btsSelect').value = videoId;
+            playBtsTrack(videoId);
+        }
+
+        function prevBtsTrack() {
+            currentBtsIndex = (currentBtsIndex - 1 + btsTracks.length) % btsTracks.length;
+            const videoId = btsTracks[currentBtsIndex];
+            document.getElementById('btsSelect').value = videoId;
+            playBtsTrack(videoId);
+        }
+
+        function toggleAudioPlay() {
+            const btn = document.getElementById('mainPlayBtn');
+            if (btn.innerHTML.includes('fa-play')) {
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+
+        function seekRelative(sec) {
+            const seekBar = document.getElementById('seekBar');
+            let newVal = Math.max(0, Math.min(100, parseInt(seekBar.value) + (sec > 0 ? 10 : -10)));
+            seekBar.value = newVal;
+        }
+
+        function onUserSeek(val) {}
+    </script>
+</body>
+</html>
